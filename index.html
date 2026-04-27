@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#ff8a5b">
-<title>Tvou Tour · Анкета путешественника</title>
+<title>TvoY Tour · Анкета путешественника</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -917,35 +917,6 @@
 </div>
 
 <div class="container">
-  <header>
-    <div class="brand">
-      <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 4 L16 28" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M16 8 Q 8 6 4 10 Q 9 9 13 12 Q 16 14 16 14 Z" fill="#fff"/>
-          <path d="M16 8 Q 24 6 28 10 Q 23 9 19 12 Q 16 14 16 14 Z" fill="#fff"/>
-          <path d="M16 6 Q 13 1 9 2 Q 13 5 15 10 Q 16 12 16 12 Z" fill="#fff"/>
-          <path d="M16 6 Q 19 1 23 2 Q 19 5 17 10 Q 16 12 16 12 Z" fill="#fff"/>
-          <circle cx="16" cy="14" r="1.5" fill="#fff"/>
-        </svg>
-      </div>
-      <div>
-        <div class="brand-name">Tvou <em>Tour</em></div>
-        <div class="brand-tag">Подбор тура · бесплатно</div>
-      </div>
-    </div>
-    <h1>Расскажите о <em>мечте</em> — мы соберём идеальный тур</h1>
-    <p class="lead">
-      Это <strong>не тест и не опрос</strong> — просто короткая анкета путешественника, чтобы менеджер сразу прислал
-      пару точных вариантов отдыха, а не двадцать «на всякий случай».
-    </p>
-    <div class="promise">
-      <span>5–7 минут</span>
-      <span class="s2">Без спама</span>
-      <span class="s3">Менеджер ответит в течение дня</span>
-    </div>
-  </header>
-
   <!-- Велком -->
   <section id="welcome" class="welcome">
     <span class="welcome-emoji" aria-hidden="true">🏝️</span>
@@ -962,7 +933,7 @@
         <path d="M4 10 L16 10 M11 5 L16 10 L11 15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
-    <div class="welcome-foot">Жмите «Поехали» — отвечайте по чуть-чуть, можно вернуться назад в любой момент.</div>
+    <div class="welcome-foot">Жмите «Поехали» — можно вернуться назад в любой момент.</div>
   </section>
 
   <!-- Визард -->
@@ -1015,7 +986,7 @@
     <p>Менеджер свяжется с вами в течение дня и пришлёт пару точных вариантов отдыха под ваш запрос. Хорошего настроения и солнечных мыслей!</p>
   </div>
 
-  <div class="footer-note">© Tvou Tour · подбор и бронирование туров</div>
+  <div class="footer-note">© TvoY Tour · подбор и бронирование туров</div>
 </div>
 
 <script>
@@ -1066,10 +1037,10 @@ const QUESTIONS = [
   {
     type: "daterange",
     q: "Желаемые даты поездки",
-    hint: "Можно указать примерные — мы поищем лучшие цены в этом окне",
+    hint: "Достаточно указать «с какого» — вторую дату можно пропустить, мы подберём оптимальное окно",
     fields: [
       { name: "from", label: "С какого числа", type: "date" },
-      { name: "to",   label: "По какое число",  type: "date" }
+      { name: "to",   label: "По какое число (необязательно)", type: "date", optional: true }
     ]
   },
   {
@@ -1088,12 +1059,12 @@ const QUESTIONS = [
     q: "Бюджет на одного человека (за всё)",
     hint: "Перелёт + проживание + питание. Это не «потолок», а ориентир.",
     options: [
-      { emoji: "💵", label: "до 50 000 ₽" },
-      { emoji: "💸", label: "50–100 тыс. ₽" },
-      { emoji: "💰", label: "100–200 тыс. ₽" },
-      { emoji: "💳", label: "200–500 тыс. ₽" },
-      { emoji: "👑", label: "500+ тыс. ₽" },
-      { emoji: "🤝", label: "Не ограничен / гибко" }
+      { label: "до 50 000 ₽" },
+      { label: "50–100 тыс. ₽" },
+      { label: "100–200 тыс. ₽" },
+      { label: "200–500 тыс. ₽" },
+      { label: "500+ тыс. ₽" },
+      { label: "Не ограничен / гибко" }
     ]
   },
   {
@@ -1187,13 +1158,6 @@ const QUESTIONS = [
     autocomplete: "tel"
   },
   {
-    type: "email",
-    q: "Email",
-    hint: "Пришлём подборку туров на почту",
-    placeholder: "you@example.com",
-    autocomplete: "email"
-  },
-  {
     type: "single",
     q: "Удобный способ связи",
     options: [
@@ -1203,6 +1167,14 @@ const QUESTIONS = [
       { emoji: "✉️", label: "Email" },
       { emoji: "🤝", label: "Любой" }
     ]
+  },
+  {
+    type: "email",
+    q: "Email для подборки туров",
+    hint: "Пришлём подборку на этот адрес",
+    placeholder: "you@example.com",
+    autocomplete: "email",
+    condition: { idx: 14, equals: "Email" }
   }
 ];
 
@@ -1229,7 +1201,7 @@ const errToast     = document.getElementById("errToast");
 const welcomeCount = document.getElementById("welcomeCount");
 
 stepTotalEl.textContent = QUESTIONS.length;
-welcomeCount.textContent = QUESTIONS.length;
+// welcomeCount будет проставлен ниже после объявления helpers (зависит от shouldSkip)
 
 /* ============================================================================
    Состояние ответов
@@ -1242,6 +1214,40 @@ const state = QUESTIONS.map(q => ({
 
 let currentStep = 0;
 let inTransition = false;
+let submitted = false;
+let autoAdvanceTimer = null;
+function cancelAutoAdvance() {
+  if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+}
+
+/* ============================================================================
+   Условные шаги (skip-логика для Email и подобного)
+   ============================================================================ */
+function shouldSkip(idx) {
+  const q = QUESTIONS[idx];
+  if (!q || !q.condition) return false;
+  const dep = state[q.condition.idx];
+  if (!dep) return false;
+  if (q.condition.equals !== undefined) return dep.value !== q.condition.equals;
+  return false;
+}
+function getNextActiveStep(from) {
+  let n = from + 1;
+  while (n < QUESTIONS.length && shouldSkip(n)) n++;
+  return n;
+}
+function getPrevActiveStep(from) {
+  let p = from - 1;
+  while (p >= 0 && shouldSkip(p)) p--;
+  return p;
+}
+function activeIndices() {
+  return QUESTIONS.map((_, i) => i).filter(i => !shouldSkip(i));
+}
+
+// Стартовое значение счётчика на велкоме — показываем «реальное» число вопросов
+// (Email скипается до выбора способа связи = "Email"; по умолчанию active = 15)
+welcomeCount.textContent = activeIndices().length;
 
 /* ============================================================================
    Утилиты опций
@@ -1350,9 +1356,14 @@ function renderQuestion(qIdx) {
         card.classList.remove("invalid");
         errToast.classList.remove("show");
 
-        // Авто-переход для single (кроме «другое» и кроме последнего шага)
-        if (!isMulti && !info.isOther && currentStep < QUESTIONS.length - 1) {
-          setTimeout(() => goNext(), 280);
+        // Авто-переход для single (кроме «другое» и кроме случаев,
+        // когда следующий активный шаг — это отправка формы)
+        cancelAutoAdvance();
+        if (!isMulti && !info.isOther) {
+          const nextActive = getNextActiveStep(currentStep);
+          if (nextActive < QUESTIONS.length) {
+            autoAdvanceTimer = setTimeout(() => { autoAdvanceTimer = null; goNext(); }, 280);
+          }
         }
       });
       opts.appendChild(optEl);
@@ -1451,12 +1462,17 @@ function renderQuestion(qIdx) {
    Переход между шагами
    ============================================================================ */
 function updateProgress() {
-  const pct = ((currentStep + 1) / QUESTIONS.length) * 100;
+  const active = activeIndices();
+  const total = active.length;
+  const pos = active.indexOf(currentStep) + 1;
+  const pct = (pos / total) * 100;
   progressFill.style.width = pct + "%";
   progressShell.setAttribute("aria-valuenow", String(Math.round(pct)));
-  stepNumEl.textContent = String(currentStep + 1);
-  navBack.disabled = currentStep === 0;
-  const isLast = currentStep === QUESTIONS.length - 1;
+  stepNumEl.textContent = String(pos);
+  stepTotalEl.textContent = String(total);
+  navBack.disabled = getPrevActiveStep(currentStep) < 0;
+  const nextActive = getNextActiveStep(currentStep);
+  const isLast = nextActive >= QUESTIONS.length;
   navNextLabel.textContent = isLast ? "Отправить заявку" : "Далее";
 }
 
@@ -1526,7 +1542,7 @@ function validateStep(idx) {
   }
   if (q.type === "daterange") {
     const v = s.value || {};
-    return !!(v.from && v.to);
+    return !!v.from;
   }
   if (q.type === "composite") {
     const v = s.value || {};
@@ -1537,7 +1553,8 @@ function validateStep(idx) {
 }
 
 function goNext() {
-  if (inTransition) return;
+  if (inTransition || submitted) return;
+  cancelAutoAdvance();
   if (!validateStep(currentStep)) {
     const q = QUESTIONS[currentStep];
     let msg = "Пожалуйста, выберите вариант или заполните поле.";
@@ -1549,24 +1566,27 @@ function goNext() {
     }
     if (q.type === "email") msg = "Похоже, в email опечатка — проверьте, пожалуйста.";
     if (q.type === "tel") msg = "Введите телефон — менеджер с него свяжется.";
-    if (q.type === "daterange") msg = "Укажите даты — обе.";
+    if (q.type === "daterange") msg = "Укажите хотя бы дату начала.";
     errToast.textContent = msg;
     errToast.classList.add("show");
     const card = stepStage.querySelector(".step-card");
     if (card) card.classList.add("invalid");
     return;
   }
-  if (currentStep === QUESTIONS.length - 1) {
+  const next = getNextActiveStep(currentStep);
+  if (next >= QUESTIONS.length) {
     submitForm();
   } else {
-    renderStep(currentStep + 1, "forward");
+    renderStep(next, "forward");
   }
 }
 
 function goBack() {
-  if (inTransition) return;
-  if (currentStep === 0) return;
-  renderStep(currentStep - 1, "back");
+  if (inTransition || submitted) return;
+  cancelAutoAdvance();
+  const prev = getPrevActiveStep(currentStep);
+  if (prev < 0) return;
+  renderStep(prev, "back");
 }
 
 navNext.addEventListener("click", goNext);
@@ -1587,6 +1607,9 @@ startBtn.addEventListener("click", () => {
    ============================================================================ */
 function buildPayload() {
   const items = QUESTIONS.map((q, idx) => {
+    if (shouldSkip(idx)) {
+      return { num: idx + 1, q: q.q, answer: "(не запрашивалось)", skipped: true };
+    }
     const s = state[idx];
     let answer;
     if (q.type === "single") {
@@ -1602,7 +1625,8 @@ function buildPayload() {
       answer = arr.join(", ");
     } else if (q.type === "daterange") {
       const v = s.value || {};
-      answer = (v.from || "—") + " → " + (v.to || "—");
+      const to = v.to ? v.to : "не важно";
+      answer = (v.from || "—") + " → " + to;
     } else if (q.type === "composite") {
       const v = s.value || {};
       answer = q.fields.map(f => f.label + ": " + (v[f.name] || "—")).join("; ");
@@ -1613,7 +1637,7 @@ function buildPayload() {
   });
 
   return {
-    name: "Tvou Tour — заявка",
+    name: "TvoY Tour — заявка",
     date: new Date().toISOString(),
     total: QUESTIONS.length,
     answered: items.filter(i => i.answer && i.answer !== "—").length,
@@ -1624,6 +1648,9 @@ function buildPayload() {
 }
 
 function submitForm() {
+  if (submitted) return;
+  submitted = true;
+  cancelAutoAdvance();
   wizardEl.classList.add("hidden");
   loadingEl.classList.add("show");
   window.scrollTo({ top: 0, behavior: "smooth" });

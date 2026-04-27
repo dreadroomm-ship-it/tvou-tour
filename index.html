@@ -37,12 +37,7 @@
   html { -webkit-text-size-adjust: 100%; }
   body {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background:
-      radial-gradient(ellipse 60% 40% at 12% 0%, #ffd5b8 0%, transparent 60%),
-      radial-gradient(ellipse 70% 50% at 88% 8%, #ffc7d5 0%, transparent 65%),
-      radial-gradient(ellipse 80% 50% at 50% 100%, #c6ede4 0%, transparent 60%),
-      linear-gradient(180deg, #fff5e6 0%, #ffe5d0 35%, #ffd0e0 70%, #d8f1ea 100%);
-    background-attachment: fixed;
+    background: #fff5e6;
     min-height: 100vh;
     color: var(--ink);
     padding: 28px 16px 80px;
@@ -51,6 +46,20 @@
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  /* Отдельный fixed-фон вместо background-attachment: fixed
+     (последний на iOS Safari работает плохо — прыгает при скролле) */
+  .bg-fixed {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 12% 0%, #ffd5b8 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 88% 8%, #ffc7d5 0%, transparent 65%),
+      radial-gradient(ellipse 80% 50% at 50% 100%, #c6ede4 0%, transparent 60%),
+      linear-gradient(180deg, #fff5e6 0%, #ffe5d0 35%, #ffd0e0 70%, #d8f1ea 100%);
   }
   .container {
     max-width: 780px;
@@ -81,13 +90,29 @@
   .deco-bungalow { bottom: 8%; left: 4%; width: 150px; opacity: 0.5; }
   .deco-wave   { top: 38%; right: -4%; width: 240px; opacity: 0.35; }
   .deco-cloud-1 { top: 14%; left: 30%; width: 90px; opacity: 0.45; }
+  /* Дополнительные элементы — видны только на мобильном (top/middle/bottom edges) */
+  .deco-palm-3 { display: none; }
+  .deco-wave-2 { display: none; }
+  .deco-sun-2  { display: none; }
+
   @media (max-width: 720px) {
-    .deco-palm-1 { width: 110px; opacity: 0.45; }
-    .deco-palm-2 { width: 130px; opacity: 0.4; }
-    .deco-sun    { width: 70px; }
-    .deco-bungalow { display: none; }
-    .deco-wave   { width: 140px; opacity: 0.25; }
-    .deco-cloud-1 { display: none; }
+    /* На узких экранах декор должен быть по самым краям и виден,
+       а не прятаться за карточками — поэтому привязка к bottom/top + край вьюпорта */
+    .deco-palm-1   { top: 2%; left: -8px; width: 100px; opacity: 0.7; }
+    .deco-palm-2   { top: 6%; right: -10px; bottom: auto; width: 110px; opacity: 0.65; }
+    .deco-sun      { top: 90px; right: auto; left: 50%; transform: translateX(-50%); width: 60px; opacity: 0.8; }
+    .deco-bungalow { display: block; bottom: 4%; left: -6px; width: 110px; opacity: 0.65; }
+    .deco-wave     { top: auto; bottom: 18%; right: -20px; width: 160px; opacity: 0.55; }
+    .deco-cloud-1  { display: block; top: 28%; left: 6px; width: 70px; opacity: 0.7; }
+    .deco-palm-3   { display: block; bottom: 26%; right: -8px; width: 90px; opacity: 0.6; }
+    .deco-wave-2   { display: block; top: 50%; left: -16px; width: 130px; opacity: 0.45; }
+    .deco-sun-2    { display: block; bottom: 8%; right: 10px; width: 50px; opacity: 0.7; }
+  }
+  @media (max-width: 380px) {
+    .deco-palm-1 { width: 80px; }
+    .deco-palm-2 { width: 90px; }
+    .deco-bungalow { width: 90px; }
+    .deco-palm-3 { width: 75px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .deco { transition: none; }
@@ -189,9 +214,9 @@
   /* Карточка вопроса */
   .question {
     background: var(--card);
-    border-radius: 24px;
-    padding: 24px 26px;
-    margin-bottom: 16px;
+    border-radius: 22px;
+    padding: 22px 22px;
+    margin-bottom: 14px;
     border: 1px solid var(--line);
     box-shadow:
       0 14px 40px -22px rgba(15, 122, 104, 0.18),
@@ -496,10 +521,61 @@
 
   /* Скрыть форму после отправки */
   .form-hidden { display: none !important; }
+
+  /* ============================================================================
+     МОБИЛЬНАЯ АДАПТАЦИЯ — уменьшаем поля у карточек, чтобы декор по краям был виден,
+     слегка ужимаем шрифты, тоньше тени.
+     ============================================================================ */
+  @media (max-width: 720px) {
+    body { padding: 18px 10px 70px; font-size: 16px; }
+    header { padding: 22px 20px 24px; border-radius: 24px; margin-bottom: 16px; }
+    .brand { gap: 12px; margin-bottom: 12px; }
+    .brand-mark { width: 48px; height: 48px; border-radius: 14px; }
+    .brand-mark svg { width: 28px; height: 28px; }
+    .brand-name { font-size: 26px; }
+    .brand-tag { font-size: 11px; letter-spacing: 0.14em; }
+    h1 { font-size: 26px; margin: 6px 0 10px; }
+    .lead { font-size: 15px; line-height: 1.6; }
+    .promise { gap: 6px; margin-top: 12px; }
+    .promise span { font-size: 12px; padding: 5px 10px; }
+
+    .question { padding: 18px 16px; border-radius: 20px; margin-bottom: 12px; }
+    .q-head { gap: 10px; margin-bottom: 14px; }
+    .q-num { width: 28px; height: 28px; font-size: 13px; border-radius: 9px; }
+    .q-text { font-size: 15.5px; }
+    .q-hint { font-size: 13px; }
+    .opt { padding: 12px 14px; font-size: 15px; gap: 10px; border-radius: 12px; }
+    .opt .mark { width: 20px; height: 20px; }
+    .field { padding: 12px 14px; font-size: 15.5px; border-radius: 12px; }
+    textarea.field { min-height: 80px; }
+    .field-row { gap: 10px; }
+    .field-row .field-cell label { font-size: 12px; }
+
+    .submit-block { padding: 22px 18px; border-radius: 22px; margin-top: 18px; }
+    .submit-note { font-size: 13px; margin-bottom: 14px; }
+    .submit-btn { padding: 16px 20px; font-size: 16px; border-radius: 14px; }
+
+    .thanks { padding: 36px 22px; border-radius: 24px; }
+    .thanks-mark { width: 80px; height: 80px; margin-bottom: 18px; }
+    .thanks-mark svg { width: 44px; height: 44px; }
+    .thanks h2 { font-size: 26px; }
+    .thanks p { font-size: 15px; }
+
+    .footer-note { margin-top: 24px; font-size: 12px; }
+  }
+  @media (max-width: 380px) {
+    body { padding: 14px 8px 60px; }
+    header { padding: 20px 16px 22px; }
+    .brand-name { font-size: 24px; }
+    h1 { font-size: 23px; }
+    .question { padding: 16px 14px; }
+    .opt { padding: 11px 12px; font-size: 14.5px; }
+  }
 </style>
 </head>
 <body>
 
+<div class="bg-fixed" aria-hidden="true"></div>
 <div class="scenery" aria-hidden="true">
   <!-- Солнце -->
   <div class="deco deco-sun">
@@ -594,6 +670,53 @@
   <div class="deco deco-cloud-1">
     <svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
       <path d="M 20 35 Q 10 35 10 25 Q 10 15 22 17 Q 25 8 38 10 Q 48 4 58 14 Q 72 12 75 22 Q 88 22 88 32 Q 88 40 78 40 L 22 40 Q 18 40 20 35 Z" fill="#fff" stroke="#e0d6e8" stroke-width="2" opacity="0.85"/>
+    </svg>
+  </div>
+
+  <!-- Дополнительные элементы — видны на мобильном -->
+  <div class="deco deco-palm-3">
+    <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 95 270 C 95 260 96 230 98 200 C 100 170 102 140 104 110 C 105 95 106 80 106 70" stroke="#7a4a23" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <g fill="#4cb085" stroke="#1f7a52" stroke-width="2" stroke-linejoin="round">
+        <path d="M 105 70 Q 65 55 30 65 Q 55 58 78 68 Q 96 74 105 75 Z"/>
+        <path d="M 105 70 Q 78 25 45 14 Q 72 32 92 54 Q 100 65 105 75 Z"/>
+        <path d="M 105 70 Q 108 22 130 4 Q 118 35 114 58 Q 110 72 105 75 Z"/>
+        <path d="M 105 70 Q 148 52 184 62 Q 154 60 132 70 Q 116 75 105 75 Z"/>
+        <path d="M 105 70 Q 142 98 178 116 Q 146 102 126 90 Q 110 80 105 75 Z"/>
+      </g>
+      <circle cx="94" cy="68" r="4" fill="#a8521a"/>
+      <circle cx="102" cy="62" r="4" fill="#a8521a"/>
+      <circle cx="110" cy="64" r="4" fill="#a8521a"/>
+    </svg>
+  </div>
+
+  <!-- Вторая волна -->
+  <div class="deco deco-wave-2">
+    <svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 0 50 Q 30 30 60 50 T 120 50 T 180 50 T 240 50" stroke="#5fb09e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 0 65 Q 30 45 60 65 T 120 65 T 180 65 T 240 65" stroke="#7fc7b8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+      <path d="M 60 35 Q 75 25 90 35" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+      <path d="M 160 35 Q 175 25 190 35" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+    </svg>
+  </div>
+
+  <!-- Маленькое второе солнышко (закатное) -->
+  <div class="deco deco-sun-2">
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="sunG2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffe7a8"/>
+          <stop offset="60%" stop-color="#ffae27"/>
+          <stop offset="100%" stop-color="#ec5f80"/>
+        </radialGradient>
+      </defs>
+      <g stroke="#ec5f80" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7">
+        <line x1="60" y1="10" x2="60" y2="22"/>
+        <line x1="60" y1="98" x2="60" y2="110"/>
+        <line x1="10" y1="60" x2="22" y2="60"/>
+        <line x1="98" y1="60" x2="110" y2="60"/>
+      </g>
+      <circle cx="60" cy="60" r="28" fill="url(#sunG2)" stroke="#ec5f80" stroke-width="2"/>
     </svg>
   </div>
 </div>

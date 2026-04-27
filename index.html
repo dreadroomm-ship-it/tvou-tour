@@ -48,8 +48,6 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
-  /* Отдельный fixed-фон вместо background-attachment: fixed
-     (последний на iOS Safari работает плохо — прыгает при скролле) */
   .bg-fixed {
     position: fixed;
     inset: 0;
@@ -68,7 +66,7 @@
     z-index: 1;
   }
 
-  /* Декоративный фон с пальмами / морем / солнцем */
+  /* Декор */
   .scenery {
     position: fixed;
     inset: 0;
@@ -90,14 +88,11 @@
   .deco-bungalow { bottom: 8%; left: 4%; width: 150px; opacity: 0.5; }
   .deco-wave   { top: 38%; right: -4%; width: 240px; opacity: 0.35; }
   .deco-cloud-1 { top: 14%; left: 30%; width: 90px; opacity: 0.45; }
-  /* Дополнительные элементы — видны только на мобильном (top/middle/bottom edges) */
   .deco-palm-3 { display: none; }
   .deco-wave-2 { display: none; }
   .deco-sun-2  { display: none; }
 
   @media (max-width: 720px) {
-    /* На узких экранах декор должен быть по самым краям и виден,
-       а не прятаться за карточками — поэтому привязка к bottom/top + край вьюпорта */
     .deco-palm-1   { top: 2%; left: -8px; width: 100px; opacity: 0.7; }
     .deco-palm-2   { top: 6%; right: -10px; bottom: auto; width: 110px; opacity: 0.65; }
     .deco-sun      { top: 90px; right: auto; left: 50%; transform: translateX(-50%); width: 60px; opacity: 0.8; }
@@ -159,10 +154,7 @@
     line-height: 1;
     color: var(--ink);
   }
-  .brand-name em {
-    font-style: italic;
-    color: var(--coral-500);
-  }
+  .brand-name em { font-style: italic; color: var(--coral-500); }
   .brand-tag {
     font-size: 13px;
     font-weight: 600;
@@ -180,19 +172,13 @@
     margin: 8px 0 14px;
     color: var(--ink);
   }
-  h1 em {
-    font-style: italic;
-    color: var(--coral-500);
-  }
+  h1 em { font-style: italic; color: var(--coral-500); }
   .lead {
     font-size: 16px;
     color: var(--muted);
     line-height: 1.65;
   }
-  .lead strong {
-    color: var(--turq-700);
-    font-weight: 700;
-  }
+  .lead strong { color: var(--turq-700); font-weight: 700; }
   .promise {
     margin-top: 16px;
     display: flex;
@@ -211,64 +197,199 @@
   .promise span.s2 { background: #fff1e0; color: var(--coral-600); border-color: #ffd5b8; }
   .promise span.s3 { background: #fde9ef; color: var(--rose-500); border-color: #f8c7d3; }
 
-  /* Карточка вопроса */
-  .question {
+  /* ============================================================================
+     ВЕЛКОМ-ЭКРАН
+     ============================================================================ */
+  .welcome {
     background: var(--card);
-    border-radius: 22px;
-    padding: 22px 22px;
+    border-radius: 28px;
+    padding: 44px 32px 36px;
+    border: 1px solid var(--line);
+    text-align: center;
+    box-shadow:
+      0 24px 56px -22px rgba(255, 106, 61, 0.28),
+      0 4px 12px rgba(15, 122, 104, 0.08);
+  }
+  .welcome-emoji {
+    font-size: 80px;
+    display: block;
+    margin: 0 auto 18px;
+    line-height: 1;
+    animation: bob 3.5s ease-in-out infinite;
+  }
+  .welcome h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(26px, 4.6vw, 36px);
+    line-height: 1.15;
+    font-weight: 700;
     margin-bottom: 14px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .welcome h2 em { font-style: italic; color: var(--coral-500); }
+  .welcome p.welcome-lead {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0 auto 22px;
+    max-width: 460px;
+  }
+  .welcome-stats {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .welcome-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--turq-50);
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--turq-100);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--turq-700);
+  }
+  .welcome-stat .we { font-size: 18px; line-height: 1; }
+  .welcome-cta {
+    background: linear-gradient(135deg, var(--coral-400) 0%, var(--coral-500) 60%, var(--rose-500) 100%);
+    color: #fff;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 18px 32px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 14px 28px -8px rgba(255, 106, 61, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .welcome-cta:hover { transform: translateY(-2px); box-shadow: 0 20px 36px -8px rgba(255, 106, 61, 0.6); }
+  .welcome-cta:active { transform: translateY(0); }
+  .welcome-cta svg { width: 20px; height: 20px; }
+  .welcome-foot {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--muted);
+    opacity: 0.85;
+  }
+
+  /* ============================================================================
+     ВИЗАРД — прогресс-бар, шаги, навигация
+     ============================================================================ */
+  .progress-shell {
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 13px 18px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 24px -10px rgba(31, 181, 154, 0.18);
+    position: sticky;
+    top: 8px;
+    z-index: 10;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(31, 181, 154, 0.12);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--turq-500), var(--coral-400), var(--rose-500));
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
+    box-shadow: 0 0 12px rgba(255, 138, 91, 0.5);
+  }
+  .progress-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--turq-700);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    min-width: 56px;
+    text-align: right;
+  }
+  .progress-label .of { color: var(--muted); font-weight: 600; }
+
+  /* Карточка-шаг */
+  .step-stage {
+    position: relative;
+  }
+  .step-card {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 28px 28px;
     border: 1px solid var(--line);
     box-shadow:
       0 14px 40px -22px rgba(15, 122, 104, 0.18),
       0 2px 6px rgba(15, 122, 104, 0.05);
-    position: relative;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.2, 0.9, 0.3, 1);
   }
-  .q-head {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .q-num {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--turq-500), var(--turq-700));
-    color: #fff;
-    font-weight: 700;
-    font-size: 14px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 10px -2px rgba(15, 122, 104, 0.4);
-  }
-  .q-text {
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--ink);
-    flex: 1;
-    padding-top: 4px;
-  }
-  .q-text .req {
-    color: var(--coral-500);
-    margin-left: 4px;
-  }
-  .q-hint {
-    font-size: 14px;
-    color: var(--muted);
-    font-weight: 500;
-    margin-top: 6px;
-    line-height: 1.5;
+  .step-card.active { opacity: 1; transform: translateX(0); }
+  .step-card.leaving { opacity: 0; transform: translateX(-40px); position: absolute; inset: 0; pointer-events: none; }
+  .step-card.entering-back { transform: translateX(-40px); }
+  .step-card.leaving-back { opacity: 0; transform: translateX(40px); position: absolute; inset: 0; pointer-events: none; }
+  .step-card.invalid {
+    border-color: var(--coral-400);
+    box-shadow: 0 0 0 4px rgba(255, 138, 91, 0.18);
   }
 
-  /* Опции (radio/checkbox) */
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .q-head { margin-bottom: 18px; }
+  .q-num-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--turq-50);
+    color: var(--turq-700);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
   }
-  .opt {
+  .q-text {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(22px, 3.6vw, 28px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .q-text .req { color: var(--coral-500); margin-left: 4px; }
+  .q-hint {
+    font-size: 14.5px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 8px;
+    line-height: 1.55;
+    font-family: "Inter", sans-serif;
+  }
+
+  /* Большие опции с emoji */
+  .options-big {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .options-big.list { grid-template-columns: 1fr; }
+  .opt-big {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -277,60 +398,71 @@
     border-radius: 14px;
     background: #fbfdfc;
     cursor: pointer;
-    transition: all 0.18s ease;
-    font-size: 15.5px;
-    font-weight: 500;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
     color: var(--ink);
     user-select: none;
     -webkit-user-select: none;
+    text-align: left;
+    position: relative;
+    min-height: 56px;
+    width: 100%;
+    line-height: 1.35;
   }
-  .opt:hover {
+  .opt-big:hover {
     border-color: var(--turq-300);
     background: var(--turq-50);
+    transform: translateY(-1px);
   }
-  .opt input { display: none; }
-  .opt .mark {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 2px solid #cbd6d3;
-    background: #fff;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    transition: all 0.18s ease;
+  .opt-big:active { transform: translateY(0); }
+  .opt-big.checked {
+    border-color: var(--turq-500);
+    background: linear-gradient(135deg, #e8f8f5 0%, #fff8ec 100%);
+    box-shadow: 0 6px 18px -6px rgba(31, 181, 154, 0.4);
+    padding-right: 38px;
   }
-  .opt[data-multi="1"] .mark { border-radius: 6px; }
-  .opt .mark::after {
+  .opt-big.checked::after {
     content: "";
-    width: 10px;
-    height: 10px;
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 22px; height: 22px;
     border-radius: 50%;
-    background: #fff;
-    transform: scale(0);
-    transition: transform 0.18s ease;
+    background: var(--turq-500) url("data:image/svg+xml;utf8,<svg viewBox='0 0 22 22' xmlns='http://www.w3.org/2000/svg'><path d='M6 11 L10 15 L16 8' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / 22px 22px no-repeat;
+    box-shadow: 0 4px 8px -2px rgba(31, 181, 154, 0.5);
+    animation: pop-mark 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.4);
   }
-  .opt[data-multi="1"] .mark::after {
-    border-radius: 2px;
+  @keyframes pop-mark {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
   }
-  .opt.checked {
-    border-color: var(--turq-500);
-    background: var(--turq-50);
-    box-shadow: 0 4px 14px -6px rgba(31, 181, 154, 0.4);
+  .opt-emoji {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 26px;
+    text-align: center;
   }
-  .opt.checked .mark {
-    border-color: var(--turq-500);
-    background: var(--turq-500);
+  .opt-text { flex: 1; line-height: 1.35; }
+
+  /* "Своё" поле */
+  .other-input {
+    margin-top: 8px;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
   }
-  .opt.checked .mark::after {
-    transform: scale(1);
+  .other-input.open {
+    max-height: 200px;
+    padding-top: 8px;
   }
-  .opt .opt-text { flex: 1; line-height: 1.4; }
 
   /* Текстовые поля */
   .field {
     width: 100%;
-    padding: 14px 16px;
+    padding: 16px 18px;
     border: 1.5px solid var(--line);
     border-radius: 14px;
     background: #fbfdfc;
@@ -350,7 +482,7 @@
   }
   .field::placeholder { color: #9aa6a3; font-weight: 500; }
   textarea.field {
-    min-height: 96px;
+    min-height: 110px;
     resize: vertical;
     line-height: 1.5;
   }
@@ -371,93 +503,163 @@
     .field-row { grid-template-columns: 1fr; }
   }
 
-  /* "Своё" поле — раскрывается при выборе варианта "Другое" */
-  .other-input {
-    margin-top: 8px;
-    padding: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease, padding 0.25s ease;
+  /* Навигация */
+  .nav-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    align-items: center;
   }
-  .other-input.open {
-    max-height: 200px;
-    padding-top: 8px;
-  }
-
-  /* Submit */
-  .submit-block {
-    background: var(--card);
-    border-radius: 24px;
-    padding: 28px;
-    margin-top: 24px;
-    border: 1px solid var(--line);
-    box-shadow:
-      0 14px 40px -22px rgba(255, 106, 61, 0.3),
-      0 2px 6px rgba(255, 106, 61, 0.08);
-    text-align: center;
-  }
-  .submit-note {
-    font-size: 14px;
-    color: var(--muted);
-    margin-bottom: 16px;
-    line-height: 1.55;
-  }
-  .submit-btn {
-    width: 100%;
-    background: linear-gradient(135deg, var(--coral-400) 0%, var(--coral-500) 60%, var(--rose-500) 100%);
-    color: #fff;
+  .nav-btn {
     font-family: inherit;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 0.01em;
-    padding: 18px 24px;
-    border: none;
-    border-radius: 16px;
+    border-radius: 14px;
+    padding: 16px 22px;
     cursor: pointer;
-    box-shadow:
-      0 14px 28px -8px rgba(255, 106, 61, 0.5),
-      inset 0 1px 0 rgba(255,255,255,0.3);
-    transition: all 0.18s ease;
+    border: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
   }
-  .submit-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow:
-      0 20px 36px -8px rgba(255, 106, 61, 0.6),
-      inset 0 1px 0 rgba(255,255,255,0.3);
+  .nav-back {
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--turq-700);
+    border: 1.5px solid var(--turq-100);
+    flex-shrink: 0;
+    backdrop-filter: blur(8px);
   }
-  .submit-btn:active:not(:disabled) { transform: translateY(0); }
-  .submit-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  .nav-back:hover:not(:disabled) { background: #fff; border-color: var(--turq-300); }
+  .nav-back:disabled { opacity: 0.4; cursor: not-allowed; }
+  .nav-back svg { width: 18px; height: 18px; }
+  .nav-next {
+    flex: 1;
+    background: linear-gradient(135deg, var(--coral-400) 0%, var(--coral-500) 60%, var(--rose-500) 100%);
+    color: #fff;
+    box-shadow: 0 12px 24px -8px rgba(255, 106, 61, 0.45), inset 0 1px 0 rgba(255,255,255,0.3);
   }
-  .submit-btn svg { width: 22px; height: 22px; }
+  .nav-next:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 16px 30px -8px rgba(255, 106, 61, 0.55); }
+  .nav-next:active:not(:disabled) { transform: translateY(0); }
+  .nav-next:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: 0 4px 10px rgba(255,106,61,0.18); }
+  .nav-next svg { width: 20px; height: 20px; }
 
-  /* Ошибка */
-  .error-banner {
+  .err-toast {
+    margin-top: 12px;
     background: #fff1ef;
     border: 1.5px solid #ffc4b8;
     color: var(--coral-600);
-    padding: 14px 18px;
-    border-radius: 14px;
-    margin-bottom: 16px;
-    font-size: 14.5px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
     font-weight: 600;
     display: none;
     line-height: 1.5;
   }
-  .error-banner.show { display: block; animation: shake 0.4s ease; }
+  .err-toast.show { display: block; animation: shake 0.4s ease; }
   @keyframes shake {
     10%, 90% { transform: translateX(-2px); }
     30%, 70% { transform: translateX(3px); }
     50% { transform: translateX(-3px); }
   }
-  .question.invalid {
-    border-color: var(--coral-400);
-    box-shadow: 0 0 0 4px rgba(255, 138, 91, 0.15);
+
+  /* ============================================================================
+     ЛОАДЕР
+     ============================================================================ */
+  .loading {
+    background: var(--card);
+    border-radius: 28px;
+    padding: 56px 32px;
+    text-align: center;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 60px -22px rgba(31, 181, 154, 0.3);
+    display: none;
+  }
+  .loading.show { display: block; animation: pop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+  .loading-spinner {
+    width: 76px; height: 76px;
+    margin: 0 auto 22px;
+    position: relative;
+  }
+  .loading-spinner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 5px solid rgba(31, 181, 154, 0.15);
+    border-top-color: var(--coral-500);
+    animation: spin 1s linear infinite;
+  }
+  .loading-spinner::after {
+    content: "✈️";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    animation: bob 1.4s ease-in-out infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .loading p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 380px;
+    margin: 0 auto 22px;
+  }
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .loading-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fbfdfc;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: left;
+    opacity: 0.5;
+    transition: opacity 0.4s ease, color 0.4s ease, background 0.4s ease;
+  }
+  .loading-step.done { opacity: 1; color: var(--turq-700); background: var(--turq-50); }
+  .loading-step.done .ls-mark { background: var(--turq-500); }
+  .ls-mark {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #d8e0de;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.4s ease;
+  }
+
+  /* Конфетти */
+  .confetti-piece {
+    position: fixed;
+    top: -30px;
+    width: 10px;
+    height: 14px;
+    pointer-events: none;
+    z-index: 100;
+    border-radius: 2px;
+    will-change: transform, opacity;
   }
 
   /* Спасибо-экран */
@@ -510,7 +712,6 @@
     margin: 0 auto;
   }
 
-  /* Подвал */
   .footer-note {
     text-align: center;
     margin-top: 32px;
@@ -519,12 +720,10 @@
     opacity: 0.75;
   }
 
-  /* Скрыть форму после отправки */
-  .form-hidden { display: none !important; }
+  .hidden { display: none !important; }
 
   /* ============================================================================
-     МОБИЛЬНАЯ АДАПТАЦИЯ — уменьшаем поля у карточек, чтобы декор по краям был виден,
-     слегка ужимаем шрифты, тоньше тени.
+     МОБИЛЬНАЯ АДАПТАЦИЯ
      ============================================================================ */
   @media (max-width: 720px) {
     body { padding: 18px 10px 70px; font-size: 16px; }
@@ -539,21 +738,38 @@
     .promise { gap: 6px; margin-top: 12px; }
     .promise span { font-size: 12px; padding: 5px 10px; }
 
-    .question { padding: 18px 16px; border-radius: 20px; margin-bottom: 12px; }
-    .q-head { gap: 10px; margin-bottom: 14px; }
-    .q-num { width: 28px; height: 28px; font-size: 13px; border-radius: 9px; }
-    .q-text { font-size: 15.5px; }
-    .q-hint { font-size: 13px; }
-    .opt { padding: 12px 14px; font-size: 15px; gap: 10px; border-radius: 12px; }
-    .opt .mark { width: 20px; height: 20px; }
-    .field { padding: 12px 14px; font-size: 15.5px; border-radius: 12px; }
-    textarea.field { min-height: 80px; }
-    .field-row { gap: 10px; }
-    .field-row .field-cell label { font-size: 12px; }
+    .welcome { padding: 32px 22px 28px; border-radius: 22px; }
+    .welcome-emoji { font-size: 60px; }
+    .welcome h2 { font-size: 24px; }
+    .welcome p.welcome-lead { font-size: 15px; }
+    .welcome-stat { font-size: 13px; padding: 8px 12px; }
+    .welcome-cta { font-size: 16px; padding: 16px 24px; width: 100%; }
 
-    .submit-block { padding: 22px 18px; border-radius: 22px; margin-top: 18px; }
-    .submit-note { font-size: 13px; margin-bottom: 14px; }
-    .submit-btn { padding: 16px 20px; font-size: 16px; border-radius: 14px; }
+    .progress-shell { padding: 11px 14px; gap: 10px; top: 6px; }
+    .progress-label { font-size: 12px; min-width: 50px; }
+    .progress-bar { height: 6px; }
+
+    .step-card { padding: 22px 20px; border-radius: 22px; }
+    .q-num-pill { font-size: 11px; padding: 3px 10px; }
+    .q-text { font-size: 22px; }
+    .q-hint { font-size: 13.5px; }
+
+    .options-big { grid-template-columns: 1fr; gap: 8px; }
+    .opt-big { padding: 13px 14px; font-size: 14.5px; min-height: 50px; }
+    .opt-big.checked { padding-right: 36px; }
+    .opt-emoji { font-size: 20px; width: 24px; }
+
+    .field { padding: 14px 16px; font-size: 15.5px; border-radius: 12px; }
+    textarea.field { min-height: 90px; }
+
+    .nav-bar { gap: 8px; margin-top: 14px; }
+    .nav-btn { padding: 14px 18px; font-size: 15.5px; }
+    .nav-back { padding: 14px 14px; }
+    .nav-back svg { width: 16px; height: 16px; }
+
+    .loading { padding: 40px 22px; }
+    .loading-spinner { width: 64px; height: 64px; }
+    .loading h2 { font-size: 22px; }
 
     .thanks { padding: 36px 22px; border-radius: 24px; }
     .thanks-mark { width: 80px; height: 80px; margin-bottom: 18px; }
@@ -568,8 +784,9 @@
     header { padding: 20px 16px 22px; }
     .brand-name { font-size: 24px; }
     h1 { font-size: 23px; }
-    .question { padding: 16px 14px; }
-    .opt { padding: 11px 12px; font-size: 14.5px; }
+    .step-card { padding: 18px 16px; }
+    .q-text { font-size: 20px; }
+    .opt-big { padding: 11px 12px; font-size: 14px; }
   }
 </style>
 </head>
@@ -577,7 +794,6 @@
 
 <div class="bg-fixed" aria-hidden="true"></div>
 <div class="scenery" aria-hidden="true">
-  <!-- Солнце -->
   <div class="deco deco-sun">
     <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -600,8 +816,6 @@
       <circle cx="60" cy="60" r="30" fill="url(#sunG)" stroke="#ff8a5b" stroke-width="2.5"/>
     </svg>
   </div>
-
-  <!-- Пальма слева -->
   <div class="deco deco-palm-1">
     <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
       <path d="M 95 270 C 95 260 96 230 98 200 C 100 170 102 140 104 110 C 105 95 106 80 106 70" stroke="#7a4a23" stroke-width="6" fill="none" stroke-linecap="round"/>
@@ -618,8 +832,6 @@
       <circle cx="108" cy="64" r="5" fill="#a8521a"/>
     </svg>
   </div>
-
-  <!-- Пальма справа (зеркальная) -->
   <div class="deco deco-palm-2">
     <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
       <path d="M 95 270 C 95 260 96 230 98 200 C 100 170 102 140 104 110 C 105 95 106 80 106 70" stroke="#6a3e1d" stroke-width="6" fill="none" stroke-linecap="round"/>
@@ -632,31 +844,22 @@
       </g>
     </svg>
   </div>
-
-  <!-- Бунгало -->
   <div class="deco deco-bungalow">
     <svg viewBox="0 0 180 140" xmlns="http://www.w3.org/2000/svg">
-      <!-- Вода -->
       <path d="M 0 110 Q 30 105 60 110 T 120 110 T 180 110 L 180 140 L 0 140 Z" fill="#7fc7b8" opacity="0.6"/>
       <path d="M 0 118 Q 30 113 60 118 T 120 118 T 180 118" stroke="#5fb09e" stroke-width="1.5" fill="none" opacity="0.7"/>
-      <!-- Сваи -->
       <line x1="50" y1="80" x2="50" y2="120" stroke="#7a4a23" stroke-width="3" stroke-linecap="round"/>
       <line x1="130" y1="80" x2="130" y2="120" stroke="#7a4a23" stroke-width="3" stroke-linecap="round"/>
-      <!-- Крыша из соломы -->
       <path d="M 30 60 L 90 20 L 150 60 L 140 65 L 90 30 L 40 65 Z" fill="#c98b48" stroke="#8a5824" stroke-width="2"/>
       <path d="M 35 62 L 90 25 L 145 62" stroke="#8a5824" stroke-width="1" fill="none"/>
       <path d="M 50 60 L 75 35 M 70 60 L 85 30 M 95 30 L 110 60 M 105 35 L 130 60" stroke="#8a5824" stroke-width="1" fill="none" opacity="0.5"/>
-      <!-- Стены -->
       <rect x="50" y="60" width="80" height="35" fill="#fff5dd" stroke="#8a5824" stroke-width="2"/>
       <rect x="80" y="72" width="20" height="23" fill="#5a8b9c" stroke="#3a5b6c" stroke-width="1.5"/>
       <line x1="90" y1="72" x2="90" y2="95" stroke="#3a5b6c" stroke-width="1"/>
-      <!-- Окна -->
       <circle cx="62" cy="78" r="4" fill="#9bc7d6" stroke="#3a5b6c" stroke-width="1"/>
       <circle cx="118" cy="78" r="4" fill="#9bc7d6" stroke="#3a5b6c" stroke-width="1"/>
     </svg>
   </div>
-
-  <!-- Волна -->
   <div class="deco deco-wave">
     <svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
       <path d="M 0 50 Q 30 30 60 50 T 120 50 T 180 50 T 240 50" stroke="#5fb09e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
@@ -665,15 +868,11 @@
       <path d="M 110 35 Q 125 25 140 35" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
     </svg>
   </div>
-
-  <!-- Облако -->
   <div class="deco deco-cloud-1">
     <svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
       <path d="M 20 35 Q 10 35 10 25 Q 10 15 22 17 Q 25 8 38 10 Q 48 4 58 14 Q 72 12 75 22 Q 88 22 88 32 Q 88 40 78 40 L 22 40 Q 18 40 20 35 Z" fill="#fff" stroke="#e0d6e8" stroke-width="2" opacity="0.85"/>
     </svg>
   </div>
-
-  <!-- Дополнительные элементы — видны на мобильном -->
   <div class="deco deco-palm-3">
     <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
       <path d="M 95 270 C 95 260 96 230 98 200 C 100 170 102 140 104 110 C 105 95 106 80 106 70" stroke="#7a4a23" stroke-width="6" fill="none" stroke-linecap="round"/>
@@ -689,8 +888,6 @@
       <circle cx="110" cy="64" r="4" fill="#a8521a"/>
     </svg>
   </div>
-
-  <!-- Вторая волна -->
   <div class="deco deco-wave-2">
     <svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
       <path d="M 0 50 Q 30 30 60 50 T 120 50 T 180 50 T 240 50" stroke="#5fb09e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
@@ -699,8 +896,6 @@
       <path d="M 160 35 Q 175 25 190 35" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
     </svg>
   </div>
-
-  <!-- Маленькое второе солнышко (закатное) -->
   <div class="deco deco-sun-2">
     <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -742,8 +937,7 @@
     <h1>Расскажите о <em>мечте</em> — мы соберём идеальный тур</h1>
     <p class="lead">
       Это <strong>не тест и не опрос</strong> — просто короткая анкета путешественника, чтобы менеджер сразу прислал
-      пару точных вариантов отдыха, а не двадцать «на всякий случай». Заполните то, что знаете — остальное обсудим
-      в переписке.
+      пару точных вариантов отдыха, а не двадцать «на всякий случай».
     </p>
     <div class="promise">
       <span>5–7 минут</span>
@@ -752,10 +946,65 @@
     </div>
   </header>
 
-  <div id="errorBanner" class="error-banner" role="alert"></div>
+  <!-- Велком -->
+  <section id="welcome" class="welcome">
+    <span class="welcome-emoji" aria-hidden="true">🏝️</span>
+    <h2>Привет! Соберём ваш <em>идеальный отпуск</em></h2>
+    <p class="welcome-lead">Несколько коротких вопросов — и менеджер пришлёт пару точных вариантов под ваш бюджет, даты и настроение. Без спама и звонков невпопад.</p>
+    <div class="welcome-stats">
+      <div class="welcome-stat"><span class="we">⏱</span><span>~5 минут</span></div>
+      <div class="welcome-stat"><span class="we">🎯</span><span><span id="welcomeCount">16</span> вопросов</span></div>
+      <div class="welcome-stat"><span class="we">📞</span><span>Ответ за день</span></div>
+    </div>
+    <button type="button" class="welcome-cta" id="startBtn">
+      Поехали
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M4 10 L16 10 M11 5 L16 10 L11 15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="welcome-foot">Жмите «Поехали» — отвечайте по чуть-чуть, можно вернуться назад в любой момент.</div>
+  </section>
 
-  <form id="surveyForm" novalidate></form>
+  <!-- Визард -->
+  <section id="wizard" class="hidden">
+    <div class="progress-shell" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressShell">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label"><span id="stepNum">1</span><span class="of"> из </span><span id="stepTotal">16</span></div>
+    </div>
 
+    <form id="surveyForm" novalidate>
+      <div class="step-stage" id="stepStage"></div>
+      <div class="nav-bar">
+        <button type="button" class="nav-btn nav-back" id="navBack" disabled>
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M11 3 L5 9 L11 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Назад</span>
+        </button>
+        <button type="button" class="nav-btn nav-next" id="navNext">
+          <span id="navNextLabel">Далее</span>
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 10 L16 10 M11 5 L16 10 L11 15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div id="errToast" class="err-toast" role="alert"></div>
+    </form>
+  </section>
+
+  <!-- Лоадер -->
+  <section id="loading" class="loading" role="status">
+    <div class="loading-spinner" aria-hidden="true"></div>
+    <h2>Подбираем варианты…</h2>
+    <p>Передаём вашу заявку менеджеру — это займёт пару секунд.</p>
+    <div class="loading-steps">
+      <div class="loading-step" data-step="0"><span class="ls-mark">✓</span><span>Собираем ответы</span></div>
+      <div class="loading-step" data-step="1"><span class="ls-mark">✓</span><span>Отправляем безопасно</span></div>
+      <div class="loading-step" data-step="2"><span class="ls-mark">✓</span><span>Менеджер уведомлён</span></div>
+    </div>
+  </section>
+
+  <!-- Спасибо -->
   <div id="thanks" class="thanks" role="status">
     <div class="thanks-mark" aria-hidden="true">
       <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -771,9 +1020,7 @@
 
 <script>
 /* ============================================================================
-   ВОПРОСЫ АНКЕТЫ
-   Это временный набор стандартных вопросов туристической анкеты.
-   Когда придут скриншоты Yandex.Forms — заменим вопросы 1:1 без переделки UI.
+   ВОПРОСЫ — каждая опция: строка ИЛИ {label, emoji} ИЛИ {other:true, label, emoji}
    ============================================================================ */
 const QUESTIONS = [
   {
@@ -781,9 +1028,15 @@ const QUESTIONS = [
     q: "Откуда планируете вылет?",
     hint: "Город вылета или ближайший аэропорт",
     options: [
-      "Москва", "Санкт-Петербург", "Екатеринбург", "Новосибирск",
-      "Казань", "Краснодар", "Ростов-на-Дону", "Минеральные Воды",
-      { other: true, label: "Другой город" }
+      { emoji: "🏙", label: "Москва" },
+      { emoji: "🏛", label: "Санкт-Петербург" },
+      { emoji: "🏔", label: "Екатеринбург" },
+      { emoji: "🌲", label: "Новосибирск" },
+      { emoji: "🕌", label: "Казань" },
+      { emoji: "🌊", label: "Краснодар" },
+      { emoji: "🌅", label: "Ростов-на-Дону" },
+      { emoji: "🏞", label: "Минеральные Воды" },
+      { other: true, emoji: "✏️", label: "Другой город" }
     ]
   },
   {
@@ -791,11 +1044,23 @@ const QUESTIONS = [
     q: "Куда хотите поехать?",
     hint: "Можно выбрать несколько направлений или вариант «не определились»",
     options: [
-      "Турция", "Египет", "ОАЭ", "Таиланд", "Мальдивы",
-      "Греция", "Кипр", "Италия", "Испания",
-      "Доминикана", "Куба", "Шри-Ланка", "Вьетнам", "Бали",
-      "Россия (юг, Кавказ)", "Ещё не определились — посоветуйте",
-      { other: true, label: "Другая страна / регион" }
+      { emoji: "🇹🇷", label: "Турция" },
+      { emoji: "🐪", label: "Египет" },
+      { emoji: "🕌", label: "ОАЭ" },
+      { emoji: "🐘", label: "Таиланд" },
+      { emoji: "🏝", label: "Мальдивы" },
+      { emoji: "🏛", label: "Греция" },
+      { emoji: "⛪", label: "Кипр" },
+      { emoji: "🍝", label: "Италия" },
+      { emoji: "💃", label: "Испания" },
+      { emoji: "🌴", label: "Доминикана" },
+      { emoji: "🚬", label: "Куба" },
+      { emoji: "🐢", label: "Шри-Ланка" },
+      { emoji: "🍜", label: "Вьетнам" },
+      { emoji: "🪷", label: "Бали" },
+      { emoji: "⛰", label: "Россия (юг, Кавказ)" },
+      { emoji: "🤔", label: "Ещё не определились — посоветуйте" },
+      { other: true, emoji: "✏️", label: "Другая страна / регион" }
     ]
   },
   {
@@ -811,8 +1076,11 @@ const QUESTIONS = [
     type: "single",
     q: "Сколько ночей хотите отдохнуть?",
     options: [
-      "5–7 ночей", "8–10 ночей", "11–14 ночей", "15+ ночей",
-      "Гибко — главное цена"
+      { emoji: "🗓", label: "5–7 ночей" },
+      { emoji: "📆", label: "8–10 ночей" },
+      { emoji: "🌙", label: "11–14 ночей" },
+      { emoji: "🏖", label: "15+ ночей" },
+      { emoji: "🤷", label: "Гибко — главное цена" }
     ]
   },
   {
@@ -820,8 +1088,12 @@ const QUESTIONS = [
     q: "Бюджет на одного человека (за всё)",
     hint: "Перелёт + проживание + питание. Это не «потолок», а ориентир.",
     options: [
-      "до 50 000 ₽", "50–100 тыс. ₽", "100–200 тыс. ₽",
-      "200–500 тыс. ₽", "500+ тыс. ₽", "Не ограничен / гибко"
+      { emoji: "💵", label: "до 50 000 ₽" },
+      { emoji: "💸", label: "50–100 тыс. ₽" },
+      { emoji: "💰", label: "100–200 тыс. ₽" },
+      { emoji: "💳", label: "200–500 тыс. ₽" },
+      { emoji: "👑", label: "500+ тыс. ₽" },
+      { emoji: "🤝", label: "Не ограничен / гибко" }
     ]
   },
   {
@@ -838,58 +1110,66 @@ const QUESTIONS = [
     type: "single",
     q: "Звёздность отеля",
     options: [
-      "3★", "4★", "5★", "Бутик / вилла",
-      "Не важно — главное удобство и чистота"
+      { emoji: "⭐", label: "3★" },
+      { emoji: "✨", label: "4★" },
+      { emoji: "🌟", label: "5★" },
+      { emoji: "🏛", label: "Бутик / вилла" },
+      { emoji: "🤷", label: "Не важно — главное удобство и чистота" }
     ]
   },
   {
     type: "single",
     q: "Тип питания",
     options: [
-      "Завтрак (BB)",
-      "Завтрак + ужин (HB)",
-      "Полный пансион (FB)",
-      "Всё включено (AI)",
-      "Ультра всё включено (UAI)",
-      "Не важно"
+      { emoji: "☕", label: "Завтрак (BB)" },
+      { emoji: "🍽", label: "Завтрак + ужин (HB)" },
+      { emoji: "🍴", label: "Полный пансион (FB)" },
+      { emoji: "🍹", label: "Всё включено (AI)" },
+      { emoji: "🥂", label: "Ультра всё включено (UAI)" },
+      { emoji: "🤷", label: "Не важно" }
     ]
   },
   {
     type: "single",
     q: "Линия пляжа",
     hint: "1-я линия = отель прямо у моря",
-    options: ["1-я линия", "2-я линия", "3-я и далее", "Не важно"]
+    options: [
+      { emoji: "🌊", label: "1-я линия" },
+      { emoji: "🏖", label: "2-я линия" },
+      { emoji: "🌴", label: "3-я и далее" },
+      { emoji: "🤷", label: "Не важно" }
+    ]
   },
   {
     type: "multi",
     q: "Какой отдых ближе по душе?",
     hint: "Можно несколько — это поможет подобрать страну и отель",
     options: [
-      "Пляжный — лежаки, море, ничегонеделание",
-      "Экскурсионный — города, достопримечательности",
-      "Активный — походы, дайвинг, сёрфинг",
-      "Спа и велнес",
-      "Шопинг",
-      "Гастрономический",
-      "Романтика для двоих",
-      "Семейный с детьми",
-      "Тусовки и ночная жизнь"
+      { emoji: "🏖", label: "Пляжный — лежаки, море, ничегонеделание" },
+      { emoji: "🏛", label: "Экскурсионный — города, достопримечательности" },
+      { emoji: "⛰", label: "Активный — походы, дайвинг, сёрфинг" },
+      { emoji: "💆", label: "Спа и велнес" },
+      { emoji: "🛍", label: "Шопинг" },
+      { emoji: "🍷", label: "Гастрономический" },
+      { emoji: "💕", label: "Романтика для двоих" },
+      { emoji: "👨‍👩‍👧", label: "Семейный с детьми" },
+      { emoji: "🎉", label: "Тусовки и ночная жизнь" }
     ]
   },
   {
     type: "single",
     q: "Виза",
     options: [
-      "Уже есть виза (укажите ниже)",
-      "Нужно помочь оформить",
-      "Хочу страну без визы",
-      "Не важно — буду делать сам"
+      { emoji: "✅", label: "Уже есть виза" },
+      { emoji: "📋", label: "Нужно помочь оформить" },
+      { emoji: "🌍", label: "Хочу страну без визы" },
+      { emoji: "👤", label: "Не важно — буду делать сам" }
     ]
   },
   {
     type: "textarea",
     q: "Особые пожелания",
-    hint: "Аллергии, нужен трансфер из аэропорта, хочу определённый отель/сеть, день рождения в поездке и т. п. Можно пропустить, если ничего не приходит в голову.",
+    hint: "Аллергии, нужен трансфер из аэропорта, хотите определённый отель/сеть, день рождения в поездке и т. п. Можно пропустить.",
     optional: true,
     placeholder: "Например: «нужна детская кроватка», «отель у рифа», «без шумных аниматоров»…"
   },
@@ -916,100 +1196,143 @@ const QUESTIONS = [
   {
     type: "single",
     q: "Удобный способ связи",
-    options: ["Telegram", "WhatsApp", "Звонок", "Email", "Любой"]
+    options: [
+      { emoji: "✈️", label: "Telegram" },
+      { emoji: "💬", label: "WhatsApp" },
+      { emoji: "📞", label: "Звонок" },
+      { emoji: "✉️", label: "Email" },
+      { emoji: "🤝", label: "Любой" }
+    ]
   }
 ];
 
-/* ============================================================================
-   КОНФИГ ОТПРАВКИ
-   ============================================================================ */
-const WEBHOOK_URL = ""; // заменим после деплоя Apps Script
+const WEBHOOK_URL = ""; // заполнить после деплоя Apps Script
 
 /* ============================================================================
-   РЕНДЕР
+   DOM-ссылки
    ============================================================================ */
-const formEl   = document.getElementById("surveyForm");
-const errorEl  = document.getElementById("errorBanner");
-const thanksEl = document.getElementById("thanks");
+const welcomeEl    = document.getElementById("welcome");
+const wizardEl     = document.getElementById("wizard");
+const loadingEl    = document.getElementById("loading");
+const thanksEl     = document.getElementById("thanks");
+const formEl       = document.getElementById("surveyForm");
+const stepStage    = document.getElementById("stepStage");
+const navBack      = document.getElementById("navBack");
+const navNext      = document.getElementById("navNext");
+const navNextLabel = document.getElementById("navNextLabel");
+const progressFill = document.getElementById("progressFill");
+const progressShell= document.getElementById("progressShell");
+const stepNumEl    = document.getElementById("stepNum");
+const stepTotalEl  = document.getElementById("stepTotal");
+const startBtn     = document.getElementById("startBtn");
+const errToast     = document.getElementById("errToast");
+const welcomeCount = document.getElementById("welcomeCount");
 
+stepTotalEl.textContent = QUESTIONS.length;
+welcomeCount.textContent = QUESTIONS.length;
+
+/* ============================================================================
+   Состояние ответов
+   ============================================================================ */
 const state = QUESTIONS.map(q => ({
   type: q.type,
   value: q.type === "multi" ? [] : (q.type === "composite" || q.type === "daterange") ? {} : "",
   otherText: ""
 }));
 
+let currentStep = 0;
+let inTransition = false;
+
+/* ============================================================================
+   Утилиты опций
+   ============================================================================ */
+function getOptInfo(opt) {
+  if (typeof opt === "string") return { label: opt, emoji: "", isOther: false };
+  if (opt.other) return { label: opt.label, emoji: opt.emoji || "✏️", isOther: true };
+  return { label: opt.label, emoji: opt.emoji || "", isOther: false };
+}
+
+/* ============================================================================
+   Рендер шага
+   ============================================================================ */
 function renderQuestion(qIdx) {
   const q = QUESTIONS[qIdx];
   const card = document.createElement("section");
-  card.className = "question";
+  card.className = "step-card";
   card.dataset.idx = qIdx;
 
   const head = document.createElement("div");
   head.className = "q-head";
-  const num = document.createElement("div");
-  num.className = "q-num";
-  num.textContent = String(qIdx + 1);
+  const pill = document.createElement("div");
+  pill.className = "q-num-pill";
+  pill.textContent = "Вопрос " + (qIdx + 1) + " из " + QUESTIONS.length;
+  head.appendChild(pill);
+
   const text = document.createElement("div");
   text.className = "q-text";
   text.innerHTML = escapeHtml(q.q) + (q.optional ? "" : '<span class="req" title="Обязательное">*</span>');
+  head.appendChild(text);
+
   if (q.hint) {
     const hint = document.createElement("div");
     hint.className = "q-hint";
     hint.textContent = q.hint;
-    text.appendChild(hint);
+    head.appendChild(hint);
   }
-  head.appendChild(num);
-  head.appendChild(text);
   card.appendChild(head);
 
   if (q.type === "single" || q.type === "multi") {
     const isMulti = q.type === "multi";
     const opts = document.createElement("div");
-    opts.className = "options";
+    opts.className = "options-big" + (q.options.length > 6 || isMulti ? " list" : "");
 
-    q.options.forEach((opt, oIdx) => {
-      const isOther = typeof opt === "object" && opt.other;
-      const label = isOther ? opt.label : opt;
+    q.options.forEach((opt) => {
+      const info = getOptInfo(opt);
 
-      const optEl = document.createElement("label");
-      optEl.className = "opt";
-      if (isMulti) optEl.dataset.multi = "1";
+      const optEl = document.createElement("button");
+      optEl.type = "button";
+      optEl.className = "opt-big";
+      optEl.dataset.label = info.label;
 
-      const input = document.createElement("input");
-      input.type = isMulti ? "checkbox" : "radio";
-      input.name = "q" + qIdx;
-      input.value = label;
-
-      const mark = document.createElement("span");
-      mark.className = "mark";
+      if (info.emoji) {
+        const emojiEl = document.createElement("span");
+        emojiEl.className = "opt-emoji";
+        emojiEl.textContent = info.emoji;
+        optEl.appendChild(emojiEl);
+      }
 
       const txt = document.createElement("span");
       txt.className = "opt-text";
-      txt.textContent = label;
-
-      optEl.appendChild(input);
-      optEl.appendChild(mark);
+      txt.textContent = info.label;
       optEl.appendChild(txt);
-      opts.appendChild(optEl);
 
-      input.addEventListener("change", () => {
+      // Восстановление состояния
+      if (isMulti && Array.isArray(state[qIdx].value) && state[qIdx].value.includes(info.label)) {
+        optEl.classList.add("checked");
+      } else if (!isMulti && state[qIdx].value === info.label) {
+        optEl.classList.add("checked");
+      }
+
+      optEl.addEventListener("click", () => {
         if (isMulti) {
-          if (input.checked) {
-            optEl.classList.add("checked");
-            if (!state[qIdx].value.includes(label)) state[qIdx].value.push(label);
-          } else {
+          if (optEl.classList.contains("checked")) {
             optEl.classList.remove("checked");
-            state[qIdx].value = state[qIdx].value.filter(v => v !== label);
+            state[qIdx].value = state[qIdx].value.filter(v => v !== info.label);
+          } else {
+            optEl.classList.add("checked");
+            if (!state[qIdx].value.includes(info.label)) state[qIdx].value.push(info.label);
           }
         } else {
-          opts.querySelectorAll(".opt").forEach(o => o.classList.remove("checked"));
+          opts.querySelectorAll(".opt-big").forEach(o => o.classList.remove("checked"));
           optEl.classList.add("checked");
-          state[qIdx].value = label;
+          state[qIdx].value = info.label;
         }
-        if (isOther) {
+
+        // Поле "своё"
+        if (info.isOther) {
           const oi = card.querySelector(".other-input");
           if (oi) {
-            const open = isMulti ? input.checked : true;
+            const open = isMulti ? optEl.classList.contains("checked") : true;
             oi.classList.toggle("open", open);
             if (open) {
               const inp = oi.querySelector("input");
@@ -1020,23 +1343,36 @@ function renderQuestion(qIdx) {
           const oi = card.querySelector(".other-input");
           if (oi) oi.classList.remove("open");
           state[qIdx].otherText = "";
-          const inp = oi && oi.querySelector("input");
-          if (inp) inp.value = "";
+          const oiInp = oi && oi.querySelector("input");
+          if (oiInp) oiInp.value = "";
         }
-        card.classList.remove("invalid");
-      });
-    });
 
+        card.classList.remove("invalid");
+        errToast.classList.remove("show");
+
+        // Авто-переход для single (кроме «другое» и кроме последнего шага)
+        if (!isMulti && !info.isOther && currentStep < QUESTIONS.length - 1) {
+          setTimeout(() => goNext(), 280);
+        }
+      });
+      opts.appendChild(optEl);
+    });
     card.appendChild(opts);
 
-    const hasOther = q.options.some(o => typeof o === "object" && o.other);
-    if (hasOther) {
+    // Поле "своё"
+    if (q.options.some(o => typeof o === "object" && o.other)) {
       const otherWrap = document.createElement("div");
       otherWrap.className = "other-input";
+      const isOpen = isMulti
+        ? state[qIdx].value.some(v => q.options.find(o => typeof o === "object" && o.other && o.label === v))
+        : !!q.options.find(o => typeof o === "object" && o.other && o.label === state[qIdx].value);
+      if (isOpen) otherWrap.classList.add("open");
+
       const inp = document.createElement("input");
       inp.className = "field";
       inp.type = "text";
       inp.placeholder = "Уточните, пожалуйста";
+      inp.value = state[qIdx].otherText || "";
       inp.addEventListener("input", () => {
         state[qIdx].otherText = inp.value.trim();
       });
@@ -1053,19 +1389,25 @@ function renderQuestion(qIdx) {
     if (q.autocomplete) input.autocomplete = q.autocomplete;
     if (q.type === "tel") input.inputMode = "tel";
     if (q.type === "email") input.inputMode = "email";
+    input.value = state[qIdx].value || "";
     input.addEventListener("input", () => {
       state[qIdx].value = input.value.trim();
       card.classList.remove("invalid");
+      errToast.classList.remove("show");
     });
+    if (!isArea) {
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          goNext();
+        }
+      });
+    }
     card.appendChild(input);
   }
   else if (q.type === "daterange" || q.type === "composite") {
     const row = document.createElement("div");
     row.className = "field-row";
-    if (q.type === "composite" && q.fields.some(f => f.full)) {
-      // если есть full-поле — рендерим в один столбец
-      row.style.gridTemplateColumns = "1fr 1fr";
-    }
     q.fields.forEach(f => {
       const cell = document.createElement("div");
       cell.className = "field-cell";
@@ -1078,15 +1420,22 @@ function renderQuestion(qIdx) {
       if (f.placeholder) inp.placeholder = f.placeholder;
       if (f.min !== undefined) inp.min = f.min;
       if (f.max !== undefined) inp.max = f.max;
-      if (f.value !== undefined) {
+
+      // Восстановить из state, либо взять начальное значение
+      const saved = (state[qIdx].value && state[qIdx].value[f.name]);
+      if (saved !== undefined && saved !== "") {
+        inp.value = saved;
+      } else if (f.value !== undefined) {
         inp.value = f.value;
         if (!state[qIdx].value) state[qIdx].value = {};
         state[qIdx].value[f.name] = String(f.value);
       }
+
       inp.addEventListener("input", () => {
         if (!state[qIdx].value) state[qIdx].value = {};
         state[qIdx].value[f.name] = inp.value.trim();
         card.classList.remove("invalid");
+        errToast.classList.remove("show");
       });
       cell.appendChild(lab);
       cell.appendChild(inp);
@@ -1098,75 +1447,144 @@ function renderQuestion(qIdx) {
   return card;
 }
 
-QUESTIONS.forEach((_, idx) => {
-  formEl.appendChild(renderQuestion(idx));
-});
-
-// Submit-блок
-const submitBlock = document.createElement("div");
-submitBlock.className = "submit-block";
-submitBlock.innerHTML = `
-  <div class="submit-note">
-    Нажимая «Отправить», вы соглашаетесь, что мы свяжемся с вами по указанным контактам для подбора тура.
-    Никакого спама и рассылок третьим лицам.
-  </div>
-  <button type="submit" class="submit-btn" id="submitBtn">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M2 12 L22 4 L18 22 L11 14 L2 12 Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M11 14 L22 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-    </svg>
-    <span id="submitLabel">Отправить заявку</span>
-  </button>
-`;
-formEl.appendChild(submitBlock);
-
 /* ============================================================================
-   ВАЛИДАЦИЯ И ОТПРАВКА
+   Переход между шагами
    ============================================================================ */
-function validate() {
-  const errors = [];
-  QUESTIONS.forEach((q, idx) => {
-    if (q.optional) return;
-    const s = state[idx];
-    let bad = false;
-
-    if (q.type === "single") {
-      if (!s.value) bad = true;
-      else if (s.value.toString().toLowerCase().includes("друг") && !s.otherText) {
-        // если выбрано "Другое" — нужно заполнить поле
-        const opt = q.options.find(o => typeof o === "object" && o.other && s.value === o.label);
-        if (opt && !s.otherText) bad = true;
-      }
-    } else if (q.type === "multi") {
-      if (!Array.isArray(s.value) || s.value.length === 0) bad = true;
-      else {
-        const otherOpt = q.options.find(o => typeof o === "object" && o.other);
-        if (otherOpt && s.value.includes(otherOpt.label) && !s.otherText) bad = true;
-      }
-    } else if (q.type === "text" || q.type === "tel" || q.type === "email" || q.type === "textarea") {
-      if (!s.value || s.value.length < 1) bad = true;
-      if (q.type === "email" && s.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.value)) bad = true;
-      if (q.type === "tel" && s.value && s.value.replace(/\D/g, "").length < 7) bad = true;
-    } else if (q.type === "daterange") {
-      const v = s.value || {};
-      if (!v.from || !v.to) bad = true;
-    } else if (q.type === "composite") {
-      const v = s.value || {};
-      const required = q.fields.filter(f => !f.full).map(f => f.name);
-      if (required.some(n => !v[n] && v[n] !== "0")) bad = true;
-    }
-
-    const card = formEl.querySelector(`.question[data-idx="${idx}"]`);
-    if (bad) {
-      errors.push(idx);
-      if (card) card.classList.add("invalid");
-    } else {
-      if (card) card.classList.remove("invalid");
-    }
-  });
-  return errors;
+function updateProgress() {
+  const pct = ((currentStep + 1) / QUESTIONS.length) * 100;
+  progressFill.style.width = pct + "%";
+  progressShell.setAttribute("aria-valuenow", String(Math.round(pct)));
+  stepNumEl.textContent = String(currentStep + 1);
+  navBack.disabled = currentStep === 0;
+  const isLast = currentStep === QUESTIONS.length - 1;
+  navNextLabel.textContent = isLast ? "Отправить заявку" : "Далее";
 }
 
+function renderStep(idx, dir) {
+  inTransition = true;
+  const oldCard = stepStage.querySelector(".step-card");
+  const newCard = renderQuestion(idx);
+
+  if (dir === "back") newCard.classList.add("entering-back");
+
+  if (oldCard) {
+    oldCard.classList.remove("active");
+    oldCard.classList.add(dir === "back" ? "leaving-back" : "leaving");
+    setTimeout(() => oldCard.remove(), 320);
+  }
+
+  stepStage.appendChild(newCard);
+  // force reflow
+  void newCard.offsetHeight;
+  requestAnimationFrame(() => {
+    newCard.classList.remove("entering-back");
+    newCard.classList.add("active");
+    setTimeout(() => { inTransition = false; }, 320);
+  });
+
+  currentStep = idx;
+  updateProgress();
+  errToast.classList.remove("show");
+
+  // Скролл к началу шага
+  const targetTop = wizardEl.getBoundingClientRect().top + window.pageYOffset - 8;
+  if (Math.abs(window.pageYOffset - targetTop) > 60) {
+    window.scrollTo({ top: targetTop, behavior: "smooth" });
+  }
+
+  // Авто-фокус на текстовых полях (только на десктопе — на мобиле клавиатура скачет)
+  setTimeout(() => {
+    const inp = newCard.querySelector(".field");
+    if (inp && window.matchMedia("(min-width: 720px)").matches) {
+      try { inp.focus({ preventScroll: true }); } catch (_) {}
+    }
+  }, 360);
+}
+
+function validateStep(idx) {
+  const q = QUESTIONS[idx];
+  if (q.optional) return true;
+  const s = state[idx];
+
+  if (q.type === "single") {
+    if (!s.value) return false;
+    const otherOpt = q.options.find(o => typeof o === "object" && o.other);
+    if (otherOpt && s.value === otherOpt.label && !s.otherText) return false;
+    return true;
+  }
+  if (q.type === "multi") {
+    if (!Array.isArray(s.value) || s.value.length === 0) return false;
+    const otherOpt = q.options.find(o => typeof o === "object" && o.other);
+    if (otherOpt && s.value.includes(otherOpt.label) && !s.otherText) return false;
+    return true;
+  }
+  if (q.type === "text" || q.type === "tel" || q.type === "email" || q.type === "textarea") {
+    if (!s.value || s.value.length < 1) return false;
+    if (q.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.value)) return false;
+    if (q.type === "tel" && s.value.replace(/\D/g, "").length < 7) return false;
+    return true;
+  }
+  if (q.type === "daterange") {
+    const v = s.value || {};
+    return !!(v.from && v.to);
+  }
+  if (q.type === "composite") {
+    const v = s.value || {};
+    const required = q.fields.filter(f => !f.full).map(f => f.name);
+    return required.every(n => v[n] && v[n] !== "");
+  }
+  return true;
+}
+
+function goNext() {
+  if (inTransition) return;
+  if (!validateStep(currentStep)) {
+    const q = QUESTIONS[currentStep];
+    let msg = "Пожалуйста, выберите вариант или заполните поле.";
+    if (q.type === "multi") msg = "Выберите хотя бы один вариант.";
+    if (q.type === "single") {
+      const otherOpt = q.options.find(o => typeof o === "object" && o.other);
+      const s = state[currentStep];
+      if (otherOpt && s.value === otherOpt.label && !s.otherText) msg = "Уточните вариант в поле ниже.";
+    }
+    if (q.type === "email") msg = "Похоже, в email опечатка — проверьте, пожалуйста.";
+    if (q.type === "tel") msg = "Введите телефон — менеджер с него свяжется.";
+    if (q.type === "daterange") msg = "Укажите даты — обе.";
+    errToast.textContent = msg;
+    errToast.classList.add("show");
+    const card = stepStage.querySelector(".step-card");
+    if (card) card.classList.add("invalid");
+    return;
+  }
+  if (currentStep === QUESTIONS.length - 1) {
+    submitForm();
+  } else {
+    renderStep(currentStep + 1, "forward");
+  }
+}
+
+function goBack() {
+  if (inTransition) return;
+  if (currentStep === 0) return;
+  renderStep(currentStep - 1, "back");
+}
+
+navNext.addEventListener("click", goNext);
+navBack.addEventListener("click", goBack);
+
+/* ============================================================================
+   Старт визарда
+   ============================================================================ */
+startBtn.addEventListener("click", () => {
+  welcomeEl.classList.add("hidden");
+  wizardEl.classList.remove("hidden");
+  renderStep(0, "forward");
+  setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+});
+
+/* ============================================================================
+   Сборка пейлоада и отправка
+   ============================================================================ */
 function buildPayload() {
   const items = QUESTIONS.map((q, idx) => {
     const s = state[idx];
@@ -1205,55 +1623,64 @@ function buildPayload() {
   };
 }
 
-const submitBtn = document.getElementById("submitBtn");
-const submitLabel = document.getElementById("submitLabel");
+function submitForm() {
+  wizardEl.classList.add("hidden");
+  loadingEl.classList.add("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
-formEl.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const errs = validate();
-  if (errs.length) {
-    errorEl.textContent = "Не заполнены обязательные поля: №" + errs.map(i => i + 1).join(", ") +
-      ". Прокрутите выше — они подсвечены коралловым.";
-    errorEl.classList.add("show");
-    const first = formEl.querySelector(".question.invalid");
-    if (first) {
-      const top = first.getBoundingClientRect().top + window.pageYOffset - 80;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-    return;
-  }
-  errorEl.classList.remove("show");
-
-  submitBtn.disabled = true;
-  submitLabel.textContent = "Отправляем…";
+  const steps = loadingEl.querySelectorAll(".loading-step");
+  steps.forEach(s => s.classList.remove("done"));
+  setTimeout(() => steps[0] && steps[0].classList.add("done"), 200);
+  setTimeout(() => steps[1] && steps[1].classList.add("done"), 900);
+  setTimeout(() => steps[2] && steps[2].classList.add("done"), 1700);
 
   const payload = buildPayload();
-
-  try {
-    if (WEBHOOK_URL) {
-      await fetch(WEBHOOK_URL, {
+  const minDelay = new Promise(r => setTimeout(r, 2200));
+  const send = WEBHOOK_URL
+    ? fetch(WEBHOOK_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
-      });
-    } else {
-      console.warn("WEBHOOK_URL не задан — заявка не отправлена. Payload:", payload);
-    }
-    formEl.classList.add("form-hidden");
-    errorEl.classList.remove("show");
+      }).catch(err => { console.warn("send error", err); return { ok: false, _err: err }; })
+    : Promise.resolve(console.warn("WEBHOOK_URL не задан — заявка не отправлена. Payload:", payload));
+
+  Promise.all([send, minDelay]).then(() => {
+    loadingEl.classList.remove("show");
     thanksEl.classList.add("show");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } catch (err) {
-    submitBtn.disabled = false;
-    submitLabel.textContent = "Отправить заявку";
-    errorEl.textContent = "Не получилось отправить заявку. Проверьте соединение и попробуйте ещё раз.";
-    errorEl.classList.add("show");
-  }
-});
+    fireConfetti();
+  });
+}
 
 /* ============================================================================
-   ВСПОМОГАТЕЛЬНОЕ
+   Конфетти
+   ============================================================================ */
+function fireConfetti() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const colors = ["#ff8a5b", "#ec5f80", "#ffae27", "#1fb59a", "#7fc7b8", "#ffd76a", "#ffd5b8"];
+  const n = window.matchMedia("(max-width: 720px)").matches ? 40 : 70;
+  for (let i = 0; i < n; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    piece.style.opacity = "1";
+    document.body.appendChild(piece);
+    const dur = 1500 + Math.random() * 2200;
+    const drift = (Math.random() - 0.5) * 280;
+    const yEnd = window.innerHeight + 60;
+    requestAnimationFrame(() => {
+      piece.style.transition = `transform ${dur}ms cubic-bezier(0.2, 0.6, 0.4, 1), opacity ${dur}ms ease-in`;
+      piece.style.transform = `translate(${drift}px, ${yEnd}px) rotate(${Math.random() * 720}deg)`;
+      piece.style.opacity = "0";
+    });
+    setTimeout(() => piece.remove(), dur + 100);
+  }
+}
+
+/* ============================================================================
+   Прочее
    ============================================================================ */
 function escapeHtml(s) {
   return String(s)
@@ -1264,21 +1691,22 @@ function escapeHtml(s) {
     .replace(/'/g, "&#039;");
 }
 
-// Скролл наверх при первой загрузке (чтобы не было прыжков на iOS / Telegram)
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 window.scrollTo(0, 0);
 
-// Лёгкий параллакс на декоре
-const decos = document.querySelectorAll(".deco");
-let mouseX = 0, mouseY = 0;
-window.addEventListener("mousemove", (e) => {
-  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  decos.forEach((d, i) => {
-    const k = (i % 3 + 1) * 4;
-    d.style.transform = `translate(${mouseX * k}px, ${mouseY * k}px)` + (d.classList.contains("deco-palm-2") ? " scaleX(-1)" : "");
-  });
-}, { passive: true });
+// Лёгкий параллакс на декоре (только на десктопе)
+if (window.matchMedia("(min-width: 721px)").matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const decos = document.querySelectorAll(".deco");
+  window.addEventListener("mousemove", (e) => {
+    const mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    const my = (e.clientY / window.innerHeight - 0.5) * 2;
+    decos.forEach((d, i) => {
+      const k = (i % 3 + 1) * 4;
+      const baseFlip = d.classList.contains("deco-palm-2") ? " scaleX(-1)" : "";
+      d.style.transform = `translate(${mx * k}px, ${my * k}px)` + baseFlip;
+    });
+  }, { passive: true });
+}
 </script>
 </body>
 </html>

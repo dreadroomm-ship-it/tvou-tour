@@ -12,7 +12,7 @@
      5. Подставьте этот URL в index.html (const WEBHOOK_URL = "...")
    ============================================================================ */
 
-const TARGET_EMAIL = "dreadroomm@gmail.com";
+const TARGET_EMAIL = "mashulkamagomedova@gmail.com";
 const BRAND        = "Tvou Tour";
 const SUBJECT_PFX  = "🌴 Tvou Tour — новая заявка";
 

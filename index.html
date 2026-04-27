@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ff8a5b">
+<title>Tvou Tour · Анкета путешественника</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --turq-50:  #e8f8f5;
+    --turq-100: #c6ede4;
+    --turq-300: #6fcdb8;
+    --turq-500: #1fb59a;
+    --turq-700: #0f7a68;
+    --turq-900: #073e35;
+    --sand-50:  #fff8ec;
+    --sand-100: #fdecc8;
+    --sand-200: #f9d896;
+    --sand-300: #f1bb5e;
+    --coral-300:#ffb699;
+    --coral-400:#ff8a5b;
+    --coral-500:#ff6a3d;
+    --coral-600:#e84a1c;
+    --rose-300: #f7a3b6;
+    --rose-500: #ec5f80;
+    --sun-300:  #ffd76a;
+    --sun-500:  #ffae27;
+    --ink:      #1a2a2e;
+    --muted:    #4d5a5e;
+    --card:     #ffffff;
+    --line:     rgba(31, 181, 154, 0.15);
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+      radial-gradient(ellipse 60% 40% at 12% 0%, #ffd5b8 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 88% 8%, #ffc7d5 0%, transparent 65%),
+      radial-gradient(ellipse 80% 50% at 50% 100%, #c6ede4 0%, transparent 60%),
+      linear-gradient(180deg, #fff5e6 0%, #ffe5d0 35%, #ffd0e0 70%, #d8f1ea 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--ink);
+    padding: 28px 16px 80px;
+    line-height: 1.55;
+    font-size: 17px;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Декоративный фон с пальмами / морем / солнцем */
+  .scenery {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .deco {
+    position: absolute;
+    opacity: 0.55;
+    filter: drop-shadow(0 6px 14px rgba(255, 138, 91, 0.18));
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+  }
+  .deco svg { display: block; width: 100%; height: auto; }
+  .deco-palm-1 { top: 4%; left: -3%; width: 180px; opacity: 0.6; }
+  .deco-palm-2 { bottom: -2%; right: -2%; width: 220px; opacity: 0.55; transform: scaleX(-1); }
+  .deco-sun    { top: 6%; right: 8%; width: 110px; opacity: 0.7; }
+  .deco-bungalow { bottom: 8%; left: 4%; width: 150px; opacity: 0.5; }
+  .deco-wave   { top: 38%; right: -4%; width: 240px; opacity: 0.35; }
+  .deco-cloud-1 { top: 14%; left: 30%; width: 90px; opacity: 0.45; }
+  @media (max-width: 720px) {
+    .deco-palm-1 { width: 110px; opacity: 0.45; }
+    .deco-palm-2 { width: 130px; opacity: 0.4; }
+    .deco-sun    { width: 70px; }
+    .deco-bungalow { display: none; }
+    .deco-wave   { width: 140px; opacity: 0.25; }
+    .deco-cloud-1 { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .deco { transition: none; }
+  }
+
+  /* Хедер */
+  header {
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 28px;
+    padding: 30px 32px 32px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+      0 22px 56px -22px rgba(255, 106, 61, 0.25),
+      0 6px 18px rgba(31, 181, 154, 0.10),
+      inset 0 1px 0 rgba(255,255,255,0.95);
+    position: relative;
+    overflow: hidden;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .brand-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--coral-400), var(--rose-500));
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 18px -4px rgba(255, 106, 61, 0.45);
+    flex-shrink: 0;
+  }
+  .brand-mark svg { width: 34px; height: 34px; }
+  .brand-name {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .brand-name em {
+    font-style: italic;
+    color: var(--coral-500);
+  }
+  .brand-tag {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--turq-700);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 8px 0 14px;
+    color: var(--ink);
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--coral-500);
+  }
+  .lead {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .lead strong {
+    color: var(--turq-700);
+    font-weight: 700;
+  }
+  .promise {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .promise span {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--turq-50);
+    color: var(--turq-700);
+    border: 1px solid var(--turq-100);
+  }
+  .promise span.s2 { background: #fff1e0; color: var(--coral-600); border-color: #ffd5b8; }
+  .promise span.s3 { background: #fde9ef; color: var(--rose-500); border-color: #f8c7d3; }
+
+  /* Карточка вопроса */
+  .question {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 24px 26px;
+    margin-bottom: 16px;
+    border: 1px solid var(--line);
+    box-shadow:
+      0 14px 40px -22px rgba(15, 122, 104, 0.18),
+      0 2px 6px rgba(15, 122, 104, 0.05);
+    position: relative;
+  }
+  .q-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .q-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--turq-500), var(--turq-700));
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px -2px rgba(15, 122, 104, 0.4);
+  }
+  .q-text {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ink);
+    flex: 1;
+    padding-top: 4px;
+  }
+  .q-text .req {
+    color: var(--coral-500);
+    margin-left: 4px;
+  }
+  .q-hint {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* Опции (radio/checkbox) */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    background: #fbfdfc;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-size: 15.5px;
+    font-weight: 500;
+    color: var(--ink);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .opt:hover {
+    border-color: var(--turq-300);
+    background: var(--turq-50);
+  }
+  .opt input { display: none; }
+  .opt .mark {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #cbd6d3;
+    background: #fff;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    transition: all 0.18s ease;
+  }
+  .opt[data-multi="1"] .mark { border-radius: 6px; }
+  .opt .mark::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    transform: scale(0);
+    transition: transform 0.18s ease;
+  }
+  .opt[data-multi="1"] .mark::after {
+    border-radius: 2px;
+  }
+  .opt.checked {
+    border-color: var(--turq-500);
+    background: var(--turq-50);
+    box-shadow: 0 4px 14px -6px rgba(31, 181, 154, 0.4);
+  }
+  .opt.checked .mark {
+    border-color: var(--turq-500);
+    background: var(--turq-500);
+  }
+  .opt.checked .mark::after {
+    transform: scale(1);
+  }
+  .opt .opt-text { flex: 1; line-height: 1.4; }
+
+  /* Текстовые поля */
+  .field {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    background: #fbfdfc;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    transition: all 0.18s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--turq-500);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(31, 181, 154, 0.12);
+  }
+  .field::placeholder { color: #9aa6a3; font-weight: 500; }
+  textarea.field {
+    min-height: 96px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .field-row .field-cell label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--turq-700);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 520px) {
+    .field-row { grid-template-columns: 1fr; }
+  }
+
+  /* "Своё" поле — раскрывается при выборе варианта "Другое" */
+  .other-input {
+    margin-top: 8px;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+  }
+  .other-input.open {
+    max-height: 200px;
+    padding-top: 8px;
+  }
+
+  /* Submit */
+  .submit-block {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 28px;
+    margin-top: 24px;
+    border: 1px solid var(--line);
+    box-shadow:
+      0 14px 40px -22px rgba(255, 106, 61, 0.3),
+      0 2px 6px rgba(255, 106, 61, 0.08);
+    text-align: center;
+  }
+  .submit-note {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.55;
+  }
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--coral-400) 0%, var(--coral-500) 60%, var(--rose-500) 100%);
+    color: #fff;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow:
+      0 14px 28px -8px rgba(255, 106, 61, 0.5),
+      inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+      0 20px 36px -8px rgba(255, 106, 61, 0.6),
+      inset 0 1px 0 rgba(255,255,255,0.3);
+  }
+  .submit-btn:active:not(:disabled) { transform: translateY(0); }
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .submit-btn svg { width: 22px; height: 22px; }
+
+  /* Ошибка */
+  .error-banner {
+    background: #fff1ef;
+    border: 1.5px solid #ffc4b8;
+    color: var(--coral-600);
+    padding: 14px 18px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+    font-weight: 600;
+    display: none;
+    line-height: 1.5;
+  }
+  .error-banner.show { display: block; animation: shake 0.4s ease; }
+  @keyframes shake {
+    10%, 90% { transform: translateX(-2px); }
+    30%, 70% { transform: translateX(3px); }
+    50% { transform: translateX(-3px); }
+  }
+  .question.invalid {
+    border-color: var(--coral-400);
+    box-shadow: 0 0 0 4px rgba(255, 138, 91, 0.15);
+  }
+
+  /* Спасибо-экран */
+  .thanks {
+    background: var(--card);
+    border-radius: 28px;
+    padding: 48px 32px;
+    text-align: center;
+    border: 1px solid var(--line);
+    box-shadow:
+      0 24px 60px -22px rgba(31, 181, 154, 0.3),
+      0 4px 12px rgba(15, 122, 104, 0.08);
+    display: none;
+  }
+  .thanks.show { display: block; animation: pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+  @keyframes pop {
+    0% { transform: scale(0.94); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .thanks-mark {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--turq-500), var(--turq-700));
+    display: grid;
+    place-items: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 14px 30px -8px rgba(31, 181, 154, 0.5);
+    animation: bob 3s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .thanks-mark svg { width: 56px; height: 56px; color: #fff; }
+  .thanks h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 32px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .thanks h2 em { font-style: italic; color: var(--coral-500); }
+  .thanks p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Подвал */
+  .footer-note {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--muted);
+    opacity: 0.75;
+  }
+
+  /* Скрыть форму после отправки */
+  .form-hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="scenery" aria-hidden="true">
+  <!-- Солнце -->
+  <div class="deco deco-sun">
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff3b8"/>
+          <stop offset="60%" stop-color="#ffd76a"/>
+          <stop offset="100%" stop-color="#ff8a5b"/>
+        </radialGradient>
+      </defs>
+      <g stroke="#ff9d4d" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.85">
+        <line x1="60" y1="6" x2="60" y2="20"/>
+        <line x1="60" y1="100" x2="60" y2="114"/>
+        <line x1="6" y1="60" x2="20" y2="60"/>
+        <line x1="100" y1="60" x2="114" y2="60"/>
+        <line x1="22" y1="22" x2="32" y2="32"/>
+        <line x1="88" y1="88" x2="98" y2="98"/>
+        <line x1="22" y1="98" x2="32" y2="88"/>
+        <line x1="88" y1="32" x2="98" y2="22"/>
+      </g>
+      <circle cx="60" cy="60" r="30" fill="url(#sunG)" stroke="#ff8a5b" stroke-width="2.5"/>
+    </svg>
+  </div>
+
+  <!-- Пальма слева -->
+  <div class="deco deco-palm-1">
+    <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 95 270 C 95 260 96 230 98 200 C 100 170 102 140 104 110 C 105 95 106 80 106 70" stroke="#7a4a23" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M 100 95 Q 96 92 92 96 M 102 130 Q 98 127 94 131 M 104 165 Q 100 162 96 166" stroke="#7a4a23" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <g fill="#3ea876" stroke="#1f7a52" stroke-width="2" stroke-linejoin="round">
+        <path d="M 105 70 Q 60 50 25 60 Q 50 55 75 65 Q 95 72 105 75 Z"/>
+        <path d="M 105 70 Q 80 30 50 18 Q 75 35 92 55 Q 100 65 105 75 Z"/>
+        <path d="M 105 70 Q 110 30 130 10 Q 120 38 115 60 Q 110 72 105 75 Z"/>
+        <path d="M 105 70 Q 145 50 180 60 Q 150 60 130 70 Q 115 75 105 75 Z"/>
+        <path d="M 105 70 Q 140 95 175 110 Q 145 100 125 88 Q 110 80 105 75 Z"/>
+      </g>
+      <circle cx="92" cy="68" r="5" fill="#a8521a"/>
+      <circle cx="100" cy="62" r="5" fill="#a8521a"/>
+      <circle cx="108" cy="64" r="5" fill="#a8521a"/>
+    </svg>
+  </div>
+
+  <!-- Пальма справа (зеркальная) -->
+  <div class="deco deco-palm-2">
+    <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 95 270 C 95 260 96 230 98 200 C 100 170 102 140 104 110 C 105 95 106 80 106 70" stroke="#6a3e1d" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <g fill="#36976a" stroke="#0f6a47" stroke-width="2" stroke-linejoin="round">
+        <path d="M 105 70 Q 55 45 18 50 Q 50 50 75 62 Q 95 70 105 75 Z"/>
+        <path d="M 105 70 Q 75 25 40 12 Q 70 30 90 52 Q 100 65 105 75 Z"/>
+        <path d="M 105 70 Q 112 25 135 5 Q 122 35 116 58 Q 110 72 105 75 Z"/>
+        <path d="M 105 70 Q 150 48 188 55 Q 152 58 130 70 Q 115 75 105 75 Z"/>
+        <path d="M 105 70 Q 145 100 182 118 Q 148 105 125 90 Q 110 80 105 75 Z"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Бунгало -->
+  <div class="deco deco-bungalow">
+    <svg viewBox="0 0 180 140" xmlns="http://www.w3.org/2000/svg">
+      <!-- Вода -->
+      <path d="M 0 110 Q 30 105 60 110 T 120 110 T 180 110 L 180 140 L 0 140 Z" fill="#7fc7b8" opacity="0.6"/>
+      <path d="M 0 118 Q 30 113 60 118 T 120 118 T 180 118" stroke="#5fb09e" stroke-width="1.5" fill="none" opacity="0.7"/>
+      <!-- Сваи -->
+      <line x1="50" y1="80" x2="50" y2="120" stroke="#7a4a23" stroke-width="3" stroke-linecap="round"/>
+      <line x1="130" y1="80" x2="130" y2="120" stroke="#7a4a23" stroke-width="3" stroke-linecap="round"/>
+      <!-- Крыша из соломы -->
+      <path d="M 30 60 L 90 20 L 150 60 L 140 65 L 90 30 L 40 65 Z" fill="#c98b48" stroke="#8a5824" stroke-width="2"/>
+      <path d="M 35 62 L 90 25 L 145 62" stroke="#8a5824" stroke-width="1" fill="none"/>
+      <path d="M 50 60 L 75 35 M 70 60 L 85 30 M 95 30 L 110 60 M 105 35 L 130 60" stroke="#8a5824" stroke-width="1" fill="none" opacity="0.5"/>
+      <!-- Стены -->
+      <rect x="50" y="60" width="80" height="35" fill="#fff5dd" stroke="#8a5824" stroke-width="2"/>
+      <rect x="80" y="72" width="20" height="23" fill="#5a8b9c" stroke="#3a5b6c" stroke-width="1.5"/>
+      <line x1="90" y1="72" x2="90" y2="95" stroke="#3a5b6c" stroke-width="1"/>
+      <!-- Окна -->
+      <circle cx="62" cy="78" r="4" fill="#9bc7d6" stroke="#3a5b6c" stroke-width="1"/>
+      <circle cx="118" cy="78" r="4" fill="#9bc7d6" stroke="#3a5b6c" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- Волна -->
+  <div class="deco deco-wave">
+    <svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 0 50 Q 30 30 60 50 T 120 50 T 180 50 T 240 50" stroke="#5fb09e" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 0 65 Q 30 45 60 65 T 120 65 T 180 65 T 240 65" stroke="#7fc7b8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+      <path d="M 20 35 Q 35 25 50 35" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+      <path d="M 110 35 Q 125 25 140 35" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+    </svg>
+  </div>
+
+  <!-- Облако -->
+  <div class="deco deco-cloud-1">
+    <svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 20 35 Q 10 35 10 25 Q 10 15 22 17 Q 25 8 38 10 Q 48 4 58 14 Q 72 12 75 22 Q 88 22 88 32 Q 88 40 78 40 L 22 40 Q 18 40 20 35 Z" fill="#fff" stroke="#e0d6e8" stroke-width="2" opacity="0.85"/>
+    </svg>
+  </div>
+</div>
+
+<div class="container">
+  <header>
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 4 L16 28" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 8 Q 8 6 4 10 Q 9 9 13 12 Q 16 14 16 14 Z" fill="#fff"/>
+          <path d="M16 8 Q 24 6 28 10 Q 23 9 19 12 Q 16 14 16 14 Z" fill="#fff"/>
+          <path d="M16 6 Q 13 1 9 2 Q 13 5 15 10 Q 16 12 16 12 Z" fill="#fff"/>
+          <path d="M16 6 Q 19 1 23 2 Q 19 5 17 10 Q 16 12 16 12 Z" fill="#fff"/>
+          <circle cx="16" cy="14" r="1.5" fill="#fff"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">Tvou <em>Tour</em></div>
+        <div class="brand-tag">Подбор тура · бесплатно</div>
+      </div>
+    </div>
+    <h1>Расскажите о <em>мечте</em> — мы соберём идеальный тур</h1>
+    <p class="lead">
+      Это <strong>не тест и не опрос</strong> — просто короткая анкета путешественника, чтобы менеджер сразу прислал
+      пару точных вариантов отдыха, а не двадцать «на всякий случай». Заполните то, что знаете — остальное обсудим
+      в переписке.
+    </p>
+    <div class="promise">
+      <span>5–7 минут</span>
+      <span class="s2">Без спама</span>
+      <span class="s3">Менеджер ответит в течение дня</span>
+    </div>
+  </header>
+
+  <div id="errorBanner" class="error-banner" role="alert"></div>
+
+  <form id="surveyForm" novalidate></form>
+
+  <div id="thanks" class="thanks" role="status">
+    <div class="thanks-mark" aria-hidden="true">
+      <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 28 L24 36 L40 20" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Заявка <em>отправлена</em></h2>
+    <p>Менеджер свяжется с вами в течение дня и пришлёт пару точных вариантов отдыха под ваш запрос. Хорошего настроения и солнечных мыслей!</p>
+  </div>
+
+  <div class="footer-note">© Tvou Tour · подбор и бронирование туров</div>
+</div>
+
+<script>
+/* ============================================================================
+   ВОПРОСЫ АНКЕТЫ
+   Это временный набор стандартных вопросов туристической анкеты.
+   Когда придут скриншоты Yandex.Forms — заменим вопросы 1:1 без переделки UI.
+   ============================================================================ */
+const QUESTIONS = [
+  {
+    type: "single",
+    q: "Откуда планируете вылет?",
+    hint: "Город вылета или ближайший аэропорт",
+    options: [
+      "Москва", "Санкт-Петербург", "Екатеринбург", "Новосибирск",
+      "Казань", "Краснодар", "Ростов-на-Дону", "Минеральные Воды",
+      { other: true, label: "Другой город" }
+    ]
+  },
+  {
+    type: "multi",
+    q: "Куда хотите поехать?",
+    hint: "Можно выбрать несколько направлений или вариант «не определились»",
+    options: [
+      "Турция", "Египет", "ОАЭ", "Таиланд", "Мальдивы",
+      "Греция", "Кипр", "Италия", "Испания",
+      "Доминикана", "Куба", "Шри-Ланка", "Вьетнам", "Бали",
+      "Россия (юг, Кавказ)", "Ещё не определились — посоветуйте",
+      { other: true, label: "Другая страна / регион" }
+    ]
+  },
+  {
+    type: "daterange",
+    q: "Желаемые даты поездки",
+    hint: "Можно указать примерные — мы поищем лучшие цены в этом окне",
+    fields: [
+      { name: "from", label: "С какого числа", type: "date" },
+      { name: "to",   label: "По какое число",  type: "date" }
+    ]
+  },
+  {
+    type: "single",
+    q: "Сколько ночей хотите отдохнуть?",
+    options: [
+      "5–7 ночей", "8–10 ночей", "11–14 ночей", "15+ ночей",
+      "Гибко — главное цена"
+    ]
+  },
+  {
+    type: "single",
+    q: "Бюджет на одного человека (за всё)",
+    hint: "Перелёт + проживание + питание. Это не «потолок», а ориентир.",
+    options: [
+      "до 50 000 ₽", "50–100 тыс. ₽", "100–200 тыс. ₽",
+      "200–500 тыс. ₽", "500+ тыс. ₽", "Не ограничен / гибко"
+    ]
+  },
+  {
+    type: "composite",
+    q: "Кто едет?",
+    hint: "Сколько взрослых и детей — возраст детей очень важен для подбора",
+    fields: [
+      { name: "adults",   label: "Взрослых",        type: "number", min: 1, max: 12, value: 2 },
+      { name: "children", label: "Детей",            type: "number", min: 0, max: 8,  value: 0 },
+      { name: "kids_age", label: "Возраст детей (через запятую)", type: "text", placeholder: "напр. 4 и 9", full: true }
+    ]
+  },
+  {
+    type: "single",
+    q: "Звёздность отеля",
+    options: [
+      "3★", "4★", "5★", "Бутик / вилла",
+      "Не важно — главное удобство и чистота"
+    ]
+  },
+  {
+    type: "single",
+    q: "Тип питания",
+    options: [
+      "Завтрак (BB)",
+      "Завтрак + ужин (HB)",
+      "Полный пансион (FB)",
+      "Всё включено (AI)",
+      "Ультра всё включено (UAI)",
+      "Не важно"
+    ]
+  },
+  {
+    type: "single",
+    q: "Линия пляжа",
+    hint: "1-я линия = отель прямо у моря",
+    options: ["1-я линия", "2-я линия", "3-я и далее", "Не важно"]
+  },
+  {
+    type: "multi",
+    q: "Какой отдых ближе по душе?",
+    hint: "Можно несколько — это поможет подобрать страну и отель",
+    options: [
+      "Пляжный — лежаки, море, ничегонеделание",
+      "Экскурсионный — города, достопримечательности",
+      "Активный — походы, дайвинг, сёрфинг",
+      "Спа и велнес",
+      "Шопинг",
+      "Гастрономический",
+      "Романтика для двоих",
+      "Семейный с детьми",
+      "Тусовки и ночная жизнь"
+    ]
+  },
+  {
+    type: "single",
+    q: "Виза",
+    options: [
+      "Уже есть виза (укажите ниже)",
+      "Нужно помочь оформить",
+      "Хочу страну без визы",
+      "Не важно — буду делать сам"
+    ]
+  },
+  {
+    type: "textarea",
+    q: "Особые пожелания",
+    hint: "Аллергии, нужен трансфер из аэропорта, хочу определённый отель/сеть, день рождения в поездке и т. п. Можно пропустить, если ничего не приходит в голову.",
+    optional: true,
+    placeholder: "Например: «нужна детская кроватка», «отель у рифа», «без шумных аниматоров»…"
+  },
+  {
+    type: "text",
+    q: "Как вас зовут?",
+    placeholder: "Имя",
+    autocomplete: "name"
+  },
+  {
+    type: "tel",
+    q: "Телефон для связи",
+    hint: "Менеджер позвонит или напишет в мессенджер",
+    placeholder: "+7 ___ ___-__-__",
+    autocomplete: "tel"
+  },
+  {
+    type: "email",
+    q: "Email",
+    hint: "Пришлём подборку туров на почту",
+    placeholder: "you@example.com",
+    autocomplete: "email"
+  },
+  {
+    type: "single",
+    q: "Удобный способ связи",
+    options: ["Telegram", "WhatsApp", "Звонок", "Email", "Любой"]
+  }
+];
+
+/* ============================================================================
+   КОНФИГ ОТПРАВКИ
+   ============================================================================ */
+const WEBHOOK_URL = ""; // заменим после деплоя Apps Script
+
+/* ============================================================================
+   РЕНДЕР
+   ============================================================================ */
+const formEl   = document.getElementById("surveyForm");
+const errorEl  = document.getElementById("errorBanner");
+const thanksEl = document.getElementById("thanks");
+
+const state = QUESTIONS.map(q => ({
+  type: q.type,
+  value: q.type === "multi" ? [] : (q.type === "composite" || q.type === "daterange") ? {} : "",
+  otherText: ""
+}));
+
+function renderQuestion(qIdx) {
+  const q = QUESTIONS[qIdx];
+  const card = document.createElement("section");
+  card.className = "question";
+  card.dataset.idx = qIdx;
+
+  const head = document.createElement("div");
+  head.className = "q-head";
+  const num = document.createElement("div");
+  num.className = "q-num";
+  num.textContent = String(qIdx + 1);
+  const text = document.createElement("div");
+  text.className = "q-text";
+  text.innerHTML = escapeHtml(q.q) + (q.optional ? "" : '<span class="req" title="Обязательное">*</span>');
+  if (q.hint) {
+    const hint = document.createElement("div");
+    hint.className = "q-hint";
+    hint.textContent = q.hint;
+    text.appendChild(hint);
+  }
+  head.appendChild(num);
+  head.appendChild(text);
+  card.appendChild(head);
+
+  if (q.type === "single" || q.type === "multi") {
+    const isMulti = q.type === "multi";
+    const opts = document.createElement("div");
+    opts.className = "options";
+
+    q.options.forEach((opt, oIdx) => {
+      const isOther = typeof opt === "object" && opt.other;
+      const label = isOther ? opt.label : opt;
+
+      const optEl = document.createElement("label");
+      optEl.className = "opt";
+      if (isMulti) optEl.dataset.multi = "1";
+
+      const input = document.createElement("input");
+      input.type = isMulti ? "checkbox" : "radio";
+      input.name = "q" + qIdx;
+      input.value = label;
+
+      const mark = document.createElement("span");
+      mark.className = "mark";
+
+      const txt = document.createElement("span");
+      txt.className = "opt-text";
+      txt.textContent = label;
+
+      optEl.appendChild(input);
+      optEl.appendChild(mark);
+      optEl.appendChild(txt);
+      opts.appendChild(optEl);
+
+      input.addEventListener("change", () => {
+        if (isMulti) {
+          if (input.checked) {
+            optEl.classList.add("checked");
+            if (!state[qIdx].value.includes(label)) state[qIdx].value.push(label);
+          } else {
+            optEl.classList.remove("checked");
+            state[qIdx].value = state[qIdx].value.filter(v => v !== label);
+          }
+        } else {
+          opts.querySelectorAll(".opt").forEach(o => o.classList.remove("checked"));
+          optEl.classList.add("checked");
+          state[qIdx].value = label;
+        }
+        if (isOther) {
+          const oi = card.querySelector(".other-input");
+          if (oi) {
+            const open = isMulti ? input.checked : true;
+            oi.classList.toggle("open", open);
+            if (open) {
+              const inp = oi.querySelector("input");
+              if (inp) setTimeout(() => inp.focus(), 200);
+            }
+          }
+        } else if (!isMulti) {
+          const oi = card.querySelector(".other-input");
+          if (oi) oi.classList.remove("open");
+          state[qIdx].otherText = "";
+          const inp = oi && oi.querySelector("input");
+          if (inp) inp.value = "";
+        }
+        card.classList.remove("invalid");
+      });
+    });
+
+    card.appendChild(opts);
+
+    const hasOther = q.options.some(o => typeof o === "object" && o.other);
+    if (hasOther) {
+      const otherWrap = document.createElement("div");
+      otherWrap.className = "other-input";
+      const inp = document.createElement("input");
+      inp.className = "field";
+      inp.type = "text";
+      inp.placeholder = "Уточните, пожалуйста";
+      inp.addEventListener("input", () => {
+        state[qIdx].otherText = inp.value.trim();
+      });
+      otherWrap.appendChild(inp);
+      card.appendChild(otherWrap);
+    }
+  }
+  else if (q.type === "text" || q.type === "tel" || q.type === "email" || q.type === "textarea") {
+    const isArea = q.type === "textarea";
+    const input = document.createElement(isArea ? "textarea" : "input");
+    input.className = "field";
+    if (!isArea) input.type = q.type === "text" ? "text" : q.type;
+    if (q.placeholder) input.placeholder = q.placeholder;
+    if (q.autocomplete) input.autocomplete = q.autocomplete;
+    if (q.type === "tel") input.inputMode = "tel";
+    if (q.type === "email") input.inputMode = "email";
+    input.addEventListener("input", () => {
+      state[qIdx].value = input.value.trim();
+      card.classList.remove("invalid");
+    });
+    card.appendChild(input);
+  }
+  else if (q.type === "daterange" || q.type === "composite") {
+    const row = document.createElement("div");
+    row.className = "field-row";
+    if (q.type === "composite" && q.fields.some(f => f.full)) {
+      // если есть full-поле — рендерим в один столбец
+      row.style.gridTemplateColumns = "1fr 1fr";
+    }
+    q.fields.forEach(f => {
+      const cell = document.createElement("div");
+      cell.className = "field-cell";
+      if (f.full) cell.style.gridColumn = "1 / -1";
+      const lab = document.createElement("label");
+      lab.textContent = f.label;
+      const inp = document.createElement("input");
+      inp.className = "field";
+      inp.type = f.type;
+      if (f.placeholder) inp.placeholder = f.placeholder;
+      if (f.min !== undefined) inp.min = f.min;
+      if (f.max !== undefined) inp.max = f.max;
+      if (f.value !== undefined) {
+        inp.value = f.value;
+        if (!state[qIdx].value) state[qIdx].value = {};
+        state[qIdx].value[f.name] = String(f.value);
+      }
+      inp.addEventListener("input", () => {
+        if (!state[qIdx].value) state[qIdx].value = {};
+        state[qIdx].value[f.name] = inp.value.trim();
+        card.classList.remove("invalid");
+      });
+      cell.appendChild(lab);
+      cell.appendChild(inp);
+      row.appendChild(cell);
+    });
+    card.appendChild(row);
+  }
+
+  return card;
+}
+
+QUESTIONS.forEach((_, idx) => {
+  formEl.appendChild(renderQuestion(idx));
+});
+
+// Submit-блок
+const submitBlock = document.createElement("div");
+submitBlock.className = "submit-block";
+submitBlock.innerHTML = `
+  <div class="submit-note">
+    Нажимая «Отправить», вы соглашаетесь, что мы свяжемся с вами по указанным контактам для подбора тура.
+    Никакого спама и рассылок третьим лицам.
+  </div>
+  <button type="submit" class="submit-btn" id="submitBtn">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 12 L22 4 L18 22 L11 14 L2 12 Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M11 14 L22 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+    <span id="submitLabel">Отправить заявку</span>
+  </button>
+`;
+formEl.appendChild(submitBlock);
+
+/* ============================================================================
+   ВАЛИДАЦИЯ И ОТПРАВКА
+   ============================================================================ */
+function validate() {
+  const errors = [];
+  QUESTIONS.forEach((q, idx) => {
+    if (q.optional) return;
+    const s = state[idx];
+    let bad = false;
+
+    if (q.type === "single") {
+      if (!s.value) bad = true;
+      else if (s.value.toString().toLowerCase().includes("друг") && !s.otherText) {
+        // если выбрано "Другое" — нужно заполнить поле
+        const opt = q.options.find(o => typeof o === "object" && o.other && s.value === o.label);
+        if (opt && !s.otherText) bad = true;
+      }
+    } else if (q.type === "multi") {
+      if (!Array.isArray(s.value) || s.value.length === 0) bad = true;
+      else {
+        const otherOpt = q.options.find(o => typeof o === "object" && o.other);
+        if (otherOpt && s.value.includes(otherOpt.label) && !s.otherText) bad = true;
+      }
+    } else if (q.type === "text" || q.type === "tel" || q.type === "email" || q.type === "textarea") {
+      if (!s.value || s.value.length < 1) bad = true;
+      if (q.type === "email" && s.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.value)) bad = true;
+      if (q.type === "tel" && s.value && s.value.replace(/\D/g, "").length < 7) bad = true;
+    } else if (q.type === "daterange") {
+      const v = s.value || {};
+      if (!v.from || !v.to) bad = true;
+    } else if (q.type === "composite") {
+      const v = s.value || {};
+      const required = q.fields.filter(f => !f.full).map(f => f.name);
+      if (required.some(n => !v[n] && v[n] !== "0")) bad = true;
+    }
+
+    const card = formEl.querySelector(`.question[data-idx="${idx}"]`);
+    if (bad) {
+      errors.push(idx);
+      if (card) card.classList.add("invalid");
+    } else {
+      if (card) card.classList.remove("invalid");
+    }
+  });
+  return errors;
+}
+
+function buildPayload() {
+  const items = QUESTIONS.map((q, idx) => {
+    const s = state[idx];
+    let answer;
+    if (q.type === "single") {
+      answer = s.value || "";
+      if (s.otherText) answer = answer + " — " + s.otherText;
+    } else if (q.type === "multi") {
+      const arr = Array.isArray(s.value) ? [...s.value] : [];
+      const otherOpt = q.options.find(o => typeof o === "object" && o.other);
+      if (otherOpt && arr.includes(otherOpt.label) && s.otherText) {
+        const i = arr.indexOf(otherOpt.label);
+        arr[i] = otherOpt.label + ": " + s.otherText;
+      }
+      answer = arr.join(", ");
+    } else if (q.type === "daterange") {
+      const v = s.value || {};
+      answer = (v.from || "—") + " → " + (v.to || "—");
+    } else if (q.type === "composite") {
+      const v = s.value || {};
+      answer = q.fields.map(f => f.label + ": " + (v[f.name] || "—")).join("; ");
+    } else {
+      answer = s.value || "";
+    }
+    return { num: idx + 1, q: q.q, answer };
+  });
+
+  return {
+    name: "Tvou Tour — заявка",
+    date: new Date().toISOString(),
+    total: QUESTIONS.length,
+    answered: items.filter(i => i.answer && i.answer !== "—").length,
+    items,
+    user_agent: navigator.userAgent,
+    referrer: document.referrer || ""
+  };
+}
+
+const submitBtn = document.getElementById("submitBtn");
+const submitLabel = document.getElementById("submitLabel");
+
+formEl.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const errs = validate();
+  if (errs.length) {
+    errorEl.textContent = "Не заполнены обязательные поля: №" + errs.map(i => i + 1).join(", ") +
+      ". Прокрутите выше — они подсвечены коралловым.";
+    errorEl.classList.add("show");
+    const first = formEl.querySelector(".question.invalid");
+    if (first) {
+      const top = first.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+    return;
+  }
+  errorEl.classList.remove("show");
+
+  submitBtn.disabled = true;
+  submitLabel.textContent = "Отправляем…";
+
+  const payload = buildPayload();
+
+  try {
+    if (WEBHOOK_URL) {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+    } else {
+      console.warn("WEBHOOK_URL не задан — заявка не отправлена. Payload:", payload);
+    }
+    formEl.classList.add("form-hidden");
+    errorEl.classList.remove("show");
+    thanksEl.classList.add("show");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitLabel.textContent = "Отправить заявку";
+    errorEl.textContent = "Не получилось отправить заявку. Проверьте соединение и попробуйте ещё раз.";
+    errorEl.classList.add("show");
+  }
+});
+
+/* ============================================================================
+   ВСПОМОГАТЕЛЬНОЕ
+   ============================================================================ */
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// Скролл наверх при первой загрузке (чтобы не было прыжков на iOS / Telegram)
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+window.scrollTo(0, 0);
+
+// Лёгкий параллакс на декоре
+const decos = document.querySelectorAll(".deco");
+let mouseX = 0, mouseY = 0;
+window.addEventListener("mousemove", (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  decos.forEach((d, i) => {
+    const k = (i % 3 + 1) * 4;
+    d.style.transform = `translate(${mouseX * k}px, ${mouseY * k}px)` + (d.classList.contains("deco-palm-2") ? " scaleX(-1)" : "");
+  });
+}, { passive: true });
+</script>
+</body>
+</html>

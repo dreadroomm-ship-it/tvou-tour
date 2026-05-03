@@ -1,5 +1,5 @@
 /* ============================================================================
-   Tvoy Tour — Apps Script webhook
+   TvoyTour — Apps Script webhook
    Принимает JSON-заявку с сайта, шлёт письмо с PDF-вложением на TARGET_EMAIL.
    ----------------------------------------------------------------------------
    Деплой:
@@ -13,8 +13,8 @@
    ============================================================================ */
 
 const TARGET_EMAIL = "mashulkamagomedova@gmail.com";
-const BRAND        = "Tvoy Tour";
-const SUBJECT_PFX  = "🌴 Tvoy Tour — новая заявка";
+const BRAND        = "TvoyTour";
+const SUBJECT_PFX  = "🌴 TvoyTour — новая заявка";
 
 function doPost(e) {
   try {
@@ -45,7 +45,7 @@ function doPost(e) {
 
 function doGet() {
   return ContentService
-    .createTextOutput(JSON.stringify({ ok: true, service: "Tvoy Tour webhook" }))
+    .createTextOutput(JSON.stringify({ ok: true, service: "TvoyTour webhook" }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
